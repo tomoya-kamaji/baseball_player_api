@@ -4,4 +4,6 @@ api-up:
 
 ## protoc
 build-protoc:
-	protoc --go-grpc_out=grpc --go-grpc_opt=require_unimplemented_servers=false proto/base_ball_server.proto
+	protoc --go_out=grpc \
+	--go-grpc_out=grpc \
+	grpc/proto/base_ball_api.proto

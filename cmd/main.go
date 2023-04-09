@@ -2,10 +2,14 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
+	"os"
+	"os/signal"
+	"syscall"
 
-	pb "go-pkg/protobuf"
+	pb "github.com/tomoya_kamaji/go-pkg/grpc"
 
 	"google.golang.org/grpc"
 )
@@ -14,27 +18,52 @@ const (
 	port = ":50051"
 )
 
-type server struct{}
-
-func (s *server) SayHello(ctx context.Context, in *protobuf.HelloRequest) (*pb.HelloResponse, error) {
-	pb
-
-	protobuf.HelloRequest
-	api
-
-	log.Printf("Received: %v", in.GetName())
-	return &pb.HelloResponse{Message: "Hello " + in.GetName()}, nil
+func NewApiServer() *apiServer {
+	return &apiServer{}
 }
 
+type apiServer struct {
+	pb.UnimplementedBaseBallApiServer
+}
+
+func (s *apiServer) SelectPlayers(ctx context.Context, in *pb.SelectPlayersRequest) (*pb.SelectPlayersResponse, error) {
+	player1 := &pb.Player{
+		Id:       1,
+		Name:     "Tomoya",
+		Position: "Pitcher",
+	}
+
+	player2 := &pb.Player{
+		Id:       1,
+		Name:     "Tomoya",
+		Position: "Pitcher",
+	}
+
+	players := []*pb.Player{player1, player2}
+
+	return &pb.SelectPlayersResponse{Players: players}, nil
+}
 func main() {
-	lis, err := net.Listen("tcp", port)
+	// listenPortを作成
+	listenPort, err := net.Listen("tcp", ":8080")
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		panic(err)
 	}
-	s := grpc.NewServer()
-	pb.RegisterGreeterServer(s, &server{})
-	log.Printf("Server started on port %v", port)
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
-	}
+
+	// gRPCサーバーを作成
+	server := grpc.NewServer()
+	pb.RegisterBaseBallApiServer(server, NewApiServer())
+	go func() {
+		log.Printf("start gRPC server port: %v", port)
+		err = server.Serve(listenPort)
+		if err != nil && err != grpc.ErrServerStopped {
+			panic(err)
+		}
+	}()
+
+	// Ctrl+Cが入力されたらGraceful shutdownされるようにする
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+	fmt.Printf("signal received: %s\n", <-sig)
+	server.GracefulStop()
 }

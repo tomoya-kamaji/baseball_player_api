@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = ".;protobuf";
+
+service BaseBallServer {
+    rpc SelectPlayers (SelectPlayersRequest) returns (SelectPlayersReply) {}
+}
+
+message SelectPlayersRequest {
+    int64 player_id = 1;
+}
+
+message SelectPlayersReply {
+    int64 player_id = 1;
+    string player_name = 2;
+    string player_position = 3;
+}

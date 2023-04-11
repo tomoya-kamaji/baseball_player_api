@@ -11,6 +11,7 @@ import (
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
 	"github.com/tomoya_kamaji/go-pkg/src/inject"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -26,8 +27,10 @@ func main() {
 
 	// gRPCサーバーを作成
 	server := grpc.NewServer()
+	reflection.Register(server)
 	baseBallApi := inject.InitializeAdAPIServer()
 	pb.RegisterBaseBallApiServer(server, baseBallApi)
+
 	go func() {
 		log.Printf("start gRPC server port: %v", port)
 		err = server.Serve(listenPort)

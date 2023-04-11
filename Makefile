@@ -1,6 +1,8 @@
-.PHONY: api-up
 api-up:
 	docker-compose -f tools/docker-compose.yml up -d
+
+api-delete:
+	docker-compose -f tools/docker-compose.yml down --rmi all --volumes --remove-orphans
 
 ## protoc
 build-protoc:

@@ -7,3 +7,6 @@ build-protoc:
 	protoc --go_out=grpc \
 	--go-grpc_out=grpc \
 	grpc/proto/base_ball_api.proto
+
+wire:
+	wire ./...

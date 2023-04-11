@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"net"
@@ -10,7 +9,7 @@ import (
 	"syscall"
 
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
-
+	"github.com/tomoya_kamaji/go-pkg/src/inject"
 	"google.golang.org/grpc"
 )
 
@@ -18,41 +17,17 @@ const (
 	port = ":50051"
 )
 
-func NewApiServer() *apiServer {
-	return &apiServer{}
-}
-
-type apiServer struct {
-	pb.UnimplementedBaseBallApiServer
-}
-
-func (s *apiServer) SelectPlayers(ctx context.Context, in *pb.SelectPlayersRequest) (*pb.SelectPlayersResponse, error) {
-	player1 := &pb.Player{
-		Id:       1,
-		Name:     "Tomoya",
-		Position: "Pitcher",
-	}
-
-	player2 := &pb.Player{
-		Id:       1,
-		Name:     "Tomoya",
-		Position: "Pitcher",
-	}
-
-	players := []*pb.Player{player1, player2}
-
-	return &pb.SelectPlayersResponse{Players: players}, nil
-}
 func main() {
-	// listenPortを作成
-	listenPort, err := net.Listen("tcp", ":8080")
+	// listenPort
+	listenPort, err := net.Listen("tcp", port)
 	if err != nil {
 		panic(err)
 	}
 
 	// gRPCサーバーを作成
 	server := grpc.NewServer()
-	pb.RegisterBaseBallApiServer(server, NewApiServer())
+	baseBallApi := inject.InitializeAdAPIServer()
+	pb.RegisterBaseBallApiServer(server, baseBallApi)
 	go func() {
 		log.Printf("start gRPC server port: %v", port)
 		err = server.Serve(listenPort)

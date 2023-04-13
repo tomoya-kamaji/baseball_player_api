@@ -1,14 +1,15 @@
 version: "3"
 services:
-  go-api:
+  api:
+    container_name: api-container
     build:
       context: ../
       dockerfile: tools/api/Dockerfile
     ports:
       - "8080:8080"
-    # depends_on:
-    #   - mysql
-    #   - redis
+    depends_on:
+      - mysql
+      - redis
     environment:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
@@ -19,24 +20,19 @@ services:
       REDIS_PORT: 6379
     volumes: 
       - ..:/app
-
-      
-
-
-  # mysql:
-  #   image: mysql:8.0.25
-  #   ports:
-  #     - "3306:3306"
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=password
-  #     - MYSQL_DATABASE=mydb
-
-  # redis:
-  #   container_name: go_redis
-  #   image: redis:4.0
-  #   ports:
-  #     - 6379:6379
-  #   volumes:
-  #     - redis_data:/data
-  #   networks:
-  #     csw_nw:
+  mysql:
+    container_name: mysql-container
+    image: mysql:8.0.28
+    platform: linux/amd64
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mydb
+  redis:
+    container_name: redis-container
+    image: redis:6.2.6
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./data/redis:/data"

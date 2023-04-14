@@ -1,0 +1,4 @@
+
+development:
+  driver: mymysql
+  open: tcp:$MYSQL_HOST:$MYSQL_HOST_PORT*[$MYSQL_DB]/[$MYSQL_HOST_USER]/[$MYSQL_HOST_PASSWORD]

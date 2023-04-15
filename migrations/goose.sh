@@ -7,6 +7,14 @@ DBSTRING="root:password@tcp(127.0.0.1:3306)/mydb"
 # DBSTRING_PRODUCTION="user=liam dbname=tester_prd sslmode=disable"
 
 # https://github.com/pressly/goose
+function create() {
+    if [ -z "$MIGRATION_FILE" ]; then
+        echo "引数がありません"
+        exit 1
+    fi
+    goose -dir ${DIR} ${DRIVER} "${DBSTRING}" create $MIGRATION_FILE sql
+}
+
 function status() {
     goose -dir ${DIR} ${DRIVER} "${DBSTRING}" status
 }

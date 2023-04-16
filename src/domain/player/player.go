@@ -4,13 +4,13 @@ import "github.com/google/uuid"
 
 type PlayerID string
 
-func NewPlayerId() *PlayerID {
+func NewPlayerId() PlayerID {
 	playerId := PlayerID(uuid.New().String())
-	return &playerId
+	return playerId
 }
 
 type Player struct {
-	ID            *PlayerID
+	ID            PlayerID
 	UniformNumber int    // 背番号
 	Name          string // 名前
 	AtBats        int    // 打席数

@@ -1,6 +1,8 @@
+source .env
+
 DIR="migrations"
 DRIVER="mysql"
-DBSTRING="root:password@tcp(127.0.0.1:3306)/mydb" 
+DBSTRING="${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(${MYSQL_HOST}:${MYSQL_PORT})/${MYSQL_DB}"
 
 # TODO
 # DBSTRING_STAGING="user=liam dbname=tester_stg sslmode=disable"

@@ -1,5 +1,4 @@
-# コマンド確認
-help:
+help: # コマンド確認
 	@echo "\033[32mAvailable targets:\033[0m"
 	@grep "^[a-zA-Z\-]*:" Makefile | grep -v "grep" | sed -e 's/^/make /' | sed -e 's/://'
 

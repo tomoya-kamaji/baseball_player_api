@@ -20,7 +20,7 @@ type Player struct {
 	RunsBattedIn  int    // 打点数
 }
 
-func NewPlayer(
+func CreatePlayer(
 	UniformNumber int,
 	Name string,
 	AtBats int,

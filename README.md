@@ -1,5 +1,9 @@
 # Onion Architecture for Golang
 
+## アプリケーション概要
+- 野球選手の成績を管理、閲覧する
+
+
 ## ディレクトリ構成
 
 ```

@@ -27,3 +27,22 @@ build-protoc: # protoファイルからgoファイルを生成
 
 wire: # wireで依存関係を解決
 	wire ./...
+
+.PHONY: lint-all
+lint-all: imports lint vet vet-for-loop
+
+.PHONY: imports
+imports:
+	(! goimports -d $(shell find . -type f -name '*.go' -type f -not -name 'wire_gen.go' -not -name '*.pb.go' -type f -not -path "*/mock/*") | grep '^')
+
+.PHONY: lint # lint
+lint:
+	staticcheck ./...
+
+.PHONY: vet
+vet:
+	go vet ./...
+
+.PHONY: vet-for-loop
+vet-for-loop:
+	go vet -vettool=`which itervar` ./...

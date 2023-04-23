@@ -2,11 +2,10 @@ package entity
 
 import (
 	domain "github.com/tomoya_kamaji/go-pkg/src/domain/player"
-	"gorm.io/gorm"
 )
 
 type PlayerEntity struct {
-	gorm.Model
+	BaseModel
 	ID            string
 	UniformNumber int
 	Name          string

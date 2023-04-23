@@ -2,7 +2,7 @@ package entity
 
 import "time"
 
-type Model struct {
+type BaseModel struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

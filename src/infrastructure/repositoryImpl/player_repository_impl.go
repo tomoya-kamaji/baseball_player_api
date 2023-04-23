@@ -18,7 +18,6 @@ func NewPlayerRepositoryImpl(db *gorm.DB) domain.PlayerRepository {
 
 func (pr *PlayerRepositoryImpl) GetByID(c context.Context, ID domain.PlayerID) (*domain.Player, error) {
 	var playerEntity entity.PlayerEntity
-	// playerテーブルからidをキーにレコードを取得する
 	if err := pr.DB.First(&playerEntity, ID).Error; err != nil {
 		return nil, err
 	}

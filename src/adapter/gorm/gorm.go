@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"context"
 	"fmt"
 	"time"
 
@@ -9,6 +10,10 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
+
+type DBCtxKey string
+
+const CtxDBName DBCtxKey = "CTX_DB_NAME"
 
 type DBProvider struct {
 	db *gorm.DB
@@ -25,6 +30,24 @@ func NewMainDB() *DBProvider {
 	d := mySQL(*cfg)
 	mainDB = &DBProvider{db: d}
 	return mainDB
+}
+
+// Begin ... begins a new transaction
+func (prov *DBProvider) Begin() *gorm.DB {
+	return prov.db.Begin()
+}
+
+func (prov DBProvider) Provide(ctx context.Context) *gorm.DB {
+	if ctx == nil {
+		return prov.db
+	}
+
+	db := ctx.Value(CtxDBName)
+
+	if db != nil {
+		return db.(*gorm.DB)
+	}
+	return prov.db.WithContext(ctx)
 }
 
 func mySQL(cfg MainMySQLConfig) *gorm.DB {

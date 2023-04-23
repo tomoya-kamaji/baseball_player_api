@@ -9,7 +9,7 @@ import (
 	"syscall"
 
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
-	"github.com/tomoya_kamaji/go-pkg/src/inject"
+	"github.com/tomoya_kamaji/go-pkg/src/api"
 	"google.golang.org/grpc"
 )
 
@@ -26,7 +26,7 @@ func main() {
 
 	// gRPCサーバーを作成
 	server := grpc.NewServer()
-	baseBallApi := inject.InitializeAdAPIServer()
+	baseBallApi := api.NewApiServer()
 	pb.RegisterBaseBallApiServer(server, baseBallApi)
 	go func() {
 		log.Printf("start gRPC server port: %v", port)

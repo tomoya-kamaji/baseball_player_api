@@ -14,9 +14,6 @@ type PlayerEntity struct {
 	Walks         int
 	HomeRuns      int
 	RunsBattedIn  int
-	// TODO: Add more fields
-	// TeamID        int
-	// Positions     []*Position `gorm:"many2many:player_positions"`
 }
 
 func (h *PlayerEntity) ConvertToModel() *domain.Player {

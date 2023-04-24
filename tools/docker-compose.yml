@@ -30,6 +30,15 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=mydb
+  mysql_test:
+    container_name: mysql-test-container
+    image: mysql:8.0.28
+    platform: linux/amd64
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mydb
   redis:
     container_name: redis-container
     image: redis:6.2.6

@@ -10,6 +10,7 @@ api-up: # api-server起動
 goose-create: # マイグレーションファイル作成 ex) make goose-create name=new_migration_name
 	MIGRATION_FILE=$(name) sh migrations/goose.sh create
 
+# dev,stg,pro
 goose-up: # マイグレーション実行
 	sh migrations/goose.sh up
 
@@ -19,6 +20,15 @@ goose-down: # マイグレーションロールバック
 goose-status: # マイグレーションステータス
 	sh migrations/goose.sh status
 
+# test
+goose-up-test: # マイグレーション実行
+	sh migrations/goose_test.sh up
+
+goose-down-test: # マイグレーションロールバック
+	sh migrations/goose_test.sh down
+
+goose-status-test: # マイグレーションステータス
+	sh migrations/goose_test.sh status
 
 build-protoc: # protoファイルからgoファイルを生成
 	protoc --go_out=grpc \

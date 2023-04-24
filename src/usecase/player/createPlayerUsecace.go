@@ -42,7 +42,7 @@ func (u *CreatePlayerUsecase) Run(c context.Context, param CreatePlayerUsecasePa
 		param.HomeRuns,
 		param.RunsBattedIn,
 	)
-	err := u.txMgr.RunInTransaction(c, func(ctx context.Context, tx *gorm.DBProvider) error {
+	err := u.txMgr.RunInTransaction(c, func(ctx context.Context) error {
 		_, err := u.playerRepository.Create(ctx, player)
 		if err != nil {
 			return err

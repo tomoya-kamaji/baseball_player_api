@@ -6,7 +6,7 @@ services:
       context: ../
       dockerfile: tools/api/Dockerfile
     ports:
-      - "8080:8080"
+      - "50051:50051"
     depends_on:
       - mysql
       - redis
@@ -27,6 +27,15 @@ services:
     platform: linux/amd64
     ports:
       - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mydb
+  mysql_test:
+    container_name: mysql-test-container
+    image: mysql:8.0.28
+    platform: linux/amd64
+    ports:
+      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=mydb

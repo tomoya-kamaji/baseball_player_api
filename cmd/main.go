@@ -9,8 +9,10 @@ import (
 	"syscall"
 
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
+	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 	"github.com/tomoya_kamaji/go-pkg/src/api"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -26,8 +28,9 @@ func main() {
 
 	// gRPCサーバーを作成
 	server := grpc.NewServer()
-	baseBallApi := api.NewApiServer()
+	baseBallApi := api.NewApiServer(gorm.NewMainDB())
 	pb.RegisterBaseBallApiServer(server, baseBallApi)
+	reflection.Register(server)
 	go func() {
 		log.Printf("start gRPC server port: %v", port)
 		err = server.Serve(listenPort)

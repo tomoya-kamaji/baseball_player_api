@@ -15,7 +15,7 @@ func NewTransactionManagerImpl(db *gorm.DBProvider) transaction.TransactionManag
 	return &TransactionManagerImpl{db: db}
 }
 
-func (t *TransactionManagerImpl) RunInTransaction(ctx context.Context, funcs ...func(ctx context.Context, tx *gorm.DBProvider) error) error {
+func (t *TransactionManagerImpl) RunInTransaction(ctx context.Context, funcs ...func(ctx context.Context) error) error {
 	tx := t.db.Begin()
 	defer func() {
 		if r := recover(); r != nil {
@@ -33,7 +33,7 @@ func (t *TransactionManagerImpl) RunInTransaction(ctx context.Context, funcs ...
 	}()
 
 	for _, f := range funcs {
-		if err := f(ctx, t.db); err != nil {
+		if err := f(ctx); err != nil {
 			return err
 		}
 	}

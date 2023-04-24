@@ -33,6 +33,8 @@ func (repo *playerRepositoryImpl) Create(c context.Context, player *domain.Playe
 
 func (repo *playerRepositoryImpl) GetByID(c context.Context, ID domain.PlayerID) (*domain.Player, error) {
 	var playerEntity entity.PlayerEntity
-	repo.db.Provide(c).First(&playerEntity, ID)
+	if err := repo.db.Provide(c).First(&playerEntity, ID).Error; err != nil {
+		return nil, err
+	}
 	return playerEntity.ConvertToModel(), nil
 }

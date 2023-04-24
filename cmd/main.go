@@ -26,11 +26,9 @@ func main() {
 		panic(err)
 	}
 
-	gorm.NewMainDB()
-
 	// gRPCサーバーを作成
 	server := grpc.NewServer()
-	baseBallApi := api.NewApiServer()
+	baseBallApi := api.NewApiServer(gorm.NewMainDB())
 	pb.RegisterBaseBallApiServer(server, baseBallApi)
 	reflection.Register(server)
 	go func() {

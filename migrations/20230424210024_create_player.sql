@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE player (
+CREATE TABLE players (
    id VARCHAR(255) PRIMARY KEY,
    uniform_number INT NOT NULL,
    name VARCHAR(255) NOT NULL,
@@ -16,5 +16,5 @@ CREATE TABLE player (
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE IF EXISTS player;
+DROP TABLE IF EXISTS players;
 -- +goose StatementEnd

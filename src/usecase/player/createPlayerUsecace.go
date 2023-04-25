@@ -3,10 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 	domain "github.com/tomoya_kamaji/go-pkg/src/domain/player"
-	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/repositoryImpl"
-	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/transactionImpl"
 	"github.com/tomoya_kamaji/go-pkg/src/usecase/transaction"
 )
 
@@ -15,21 +12,21 @@ type CreatePlayerUsecase struct {
 	playerRepository domain.PlayerRepository
 }
 
-func NewCreatePlayerUsecase(d *gorm.DBProvider) *CreatePlayerUsecase {
+func NewCreatePlayerUsecase(txMgr transaction.TransactionManager, playerRepository domain.PlayerRepository) *CreatePlayerUsecase {
 	return &CreatePlayerUsecase{
-		txMgr:            transactionImpl.NewTransactionManagerImpl(d),
-		playerRepository: repositoryImpl.NewPlayerRepositoryImpl(d),
+		txMgr:            txMgr,
+		playerRepository: playerRepository,
 	}
 }
 
 type CreatePlayerUsecaseParam struct {
-	UniformNumber int
+	UniformNumber int64
 	Name          string
-	AtBats        int
-	Hits          int
-	Walks         int
-	HomeRuns      int
-	RunsBattedIn  int
+	AtBats        int64
+	Hits          int64
+	Walks         int64
+	HomeRuns      int64
+	RunsBattedIn  int64
 }
 
 func (u *CreatePlayerUsecase) Run(c context.Context, param CreatePlayerUsecaseParam) (*domain.Player, error) {

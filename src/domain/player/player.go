@@ -11,23 +11,23 @@ func NewPlayerId() PlayerID {
 
 type Player struct {
 	ID            PlayerID
-	UniformNumber int    // 背番号
+	UniformNumber int64  // 背番号
 	Name          string // 名前
-	AtBats        int    // 打席数
-	Hits          int    // 安打数
-	Walks         int    // 四球数
-	HomeRuns      int    // ホームラン数
-	RunsBattedIn  int    // 打点数
+	AtBats        int64  // 打席数
+	Hits          int64  // 安打数
+	Walks         int64  // 四球数
+	HomeRuns      int64  // ホームラン数
+	RunsBattedIn  int64  // 打点数
 }
 
 func CreatePlayer(
-	UniformNumber int,
+	UniformNumber int64,
 	Name string,
-	AtBats int,
-	Hits int,
-	Walks int,
-	HomeRuns int,
-	RunsBattedIn int,
+	AtBats int64,
+	Hits int64,
+	Walks int64,
+	HomeRuns int64,
+	RunsBattedIn int64,
 ) *Player {
 	player := Player{
 		ID:            NewPlayerId(),

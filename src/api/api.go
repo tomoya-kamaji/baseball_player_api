@@ -6,6 +6,7 @@ import (
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
 	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/repositoryImpl"
+	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/transactionImpl"
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -20,20 +21,42 @@ func NewApiServer(db *gorm.DBProvider) pb.BaseBallApiServer {
 	return &baseBallApiServer{db: db}
 }
 
-func (s *baseBallApiServer) SelectPlayers(ctx context.Context, in *pb.SelectPlayersRequest) (*pb.SelectPlayersResponse, error) {
-	playerIds := in.GetPlayerIds()
-	player, err := usecase.NewFetchPlayerUsecase(
-		repositoryImpl.NewPlayerRepositoryImpl(s.db),
-	).Run(ctx, playerIds[0])
+func (s *baseBallApiServer) FetchPlayer(ctx context.Context, in *pb.FetchPlayerRequest) (*pb.FetchPlayerResponse, error) {
+	playerId := in.GetPlayerId()
+	player, err := usecase.NewFetchPlayerUsecase(repositoryImpl.NewPlayerRepositoryImpl(s.db)).Run(ctx, playerId)
 
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, err.Error())
 	}
-	player1 := &pb.Player{
-		Id:   string(player.ID),
-		Name: player.Name,
+
+	return &pb.FetchPlayerResponse{Player: &pb.Player{Id: string(player.ID), Name: player.Name}}, nil
+}
+
+func (s *baseBallApiServer) CreatePlayer(ctx context.Context, in *pb.CreatePlayersRequest) (*pb.CreatePlayerResponse, error) {
+	param := usecase.CreatePlayerUsecaseParam{
+		UniformNumber: in.GetUniformNumber(),
+		Name:          in.GetName(),
+		AtBats:        in.GetAtBats(),
+		Hits:          in.GetHits(),
+		Walks:         in.GetWalks(),
+		HomeRuns:      in.GetHomeRuns(),
+		RunsBattedIn:  in.GetRunsBattedIn(),
+	}
+	player, err := usecase.NewCreatePlayerUsecase(transactionImpl.NewTransactionManagerImpl(s.db), repositoryImpl.NewPlayerRepositoryImpl(s.db)).
+		Run(ctx, param)
+
+	if err != nil {
+		return nil, status.Errorf(codes.NotFound, err.Error())
 	}
 
-	players := []*pb.Player{player1}
-	return &pb.SelectPlayersResponse{Players: players}, nil
+	return &pb.CreatePlayerResponse{Player: &pb.Player{
+		Id:            string(player.ID),
+		UniformNumber: player.UniformNumber,
+		Name:          player.Name,
+		AtBats:        player.AtBats,
+		Hits:          player.Hits,
+		Walks:         player.Walks,
+		HomeRuns:      player.HomeRuns,
+		RunsBattedIn:  player.RunsBattedIn,
+	}}, nil
 }

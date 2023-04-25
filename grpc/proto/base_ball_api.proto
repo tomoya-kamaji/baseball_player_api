@@ -3,18 +3,39 @@ syntax = "proto3";
 option go_package = ".;protobuf";
 
 service BaseBallApi {
-    rpc SelectPlayers (SelectPlayersRequest) returns (SelectPlayersResponse) {}
+    rpc FetchPlayer (FetchPlayerRequest) returns (FetchPlayerResponse) {}
+    rpc CreatePlayer (CreatePlayersRequest) returns (CreatePlayerResponse) {}
 }
 
-message SelectPlayersRequest {
-    repeated string player_ids = 1;
+message FetchPlayerRequest {
+    string player_id = 1;
 }
 
-message SelectPlayersResponse {
-    Player players = 1;
+message FetchPlayerResponse {
+    Player player = 1;
+}
+
+message CreatePlayersRequest {
+    string name = 1;    
+    int64 uniform_number = 2;
+    int64 at_bats = 3;
+    int64 hits = 4;
+    int64 walks = 5;
+    int64 home_runs = 6;
+    int64 runs_batted_in = 7;
+}
+
+message CreatePlayerResponse {
+    Player player = 1;
 }
 
 message Player {
     string id = 1;
     string name = 2;
+    int64 uniform_number = 3;
+    int64 at_bats = 4;
+    int64 hits = 5;
+    int64 walks = 6;
+    int64 home_runs = 7;
+    int64 runs_batted_in = 8;
 }

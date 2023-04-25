@@ -7,13 +7,13 @@ import (
 type PlayerEntity struct {
 	BaseModel
 	ID            string
-	UniformNumber int
+	UniformNumber int64
 	Name          string
-	AtBats        int
-	Hits          int
-	Walks         int
-	HomeRuns      int
-	RunsBattedIn  int
+	AtBats        int64
+	Hits          int64
+	Walks         int64
+	HomeRuns      int64
+	RunsBattedIn  int64
 }
 
 func (h *PlayerEntity) ConvertToModel() *domain.Player {

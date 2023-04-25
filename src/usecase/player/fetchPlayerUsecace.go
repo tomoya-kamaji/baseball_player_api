@@ -10,9 +10,7 @@ type FetchPlayerUsecase struct {
 	playerRepository domain.PlayerRepository
 }
 
-func NewFetchPlayerUsecase(
-	playerRepository domain.PlayerRepository,
-) *FetchPlayerUsecase {
+func NewFetchPlayerUsecase(playerRepository domain.PlayerRepository) *FetchPlayerUsecase {
 	return &FetchPlayerUsecase{
 		playerRepository: playerRepository,
 	}

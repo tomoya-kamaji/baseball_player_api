@@ -19,14 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BaseBallApi_SelectPlayers_FullMethodName = "/BaseBallApi/SelectPlayers"
+	BaseBallApi_FetchPlayer_FullMethodName  = "/BaseBallApi/FetchPlayer"
+	BaseBallApi_CreatePlayer_FullMethodName = "/BaseBallApi/CreatePlayer"
 )
 
 // BaseBallApiClient is the client API for BaseBallApi service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BaseBallApiClient interface {
-	SelectPlayers(ctx context.Context, in *SelectPlayersRequest, opts ...grpc.CallOption) (*SelectPlayersResponse, error)
+	FetchPlayer(ctx context.Context, in *FetchPlayerRequest, opts ...grpc.CallOption) (*FetchPlayerResponse, error)
+	CreatePlayer(ctx context.Context, in *CreatePlayersRequest, opts ...grpc.CallOption) (*CreatePlayerResponse, error)
 }
 
 type baseBallApiClient struct {
@@ -37,9 +39,18 @@ func NewBaseBallApiClient(cc grpc.ClientConnInterface) BaseBallApiClient {
 	return &baseBallApiClient{cc}
 }
 
-func (c *baseBallApiClient) SelectPlayers(ctx context.Context, in *SelectPlayersRequest, opts ...grpc.CallOption) (*SelectPlayersResponse, error) {
-	out := new(SelectPlayersResponse)
-	err := c.cc.Invoke(ctx, BaseBallApi_SelectPlayers_FullMethodName, in, out, opts...)
+func (c *baseBallApiClient) FetchPlayer(ctx context.Context, in *FetchPlayerRequest, opts ...grpc.CallOption) (*FetchPlayerResponse, error) {
+	out := new(FetchPlayerResponse)
+	err := c.cc.Invoke(ctx, BaseBallApi_FetchPlayer_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *baseBallApiClient) CreatePlayer(ctx context.Context, in *CreatePlayersRequest, opts ...grpc.CallOption) (*CreatePlayerResponse, error) {
+	out := new(CreatePlayerResponse)
+	err := c.cc.Invoke(ctx, BaseBallApi_CreatePlayer_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +61,8 @@ func (c *baseBallApiClient) SelectPlayers(ctx context.Context, in *SelectPlayers
 // All implementations must embed UnimplementedBaseBallApiServer
 // for forward compatibility
 type BaseBallApiServer interface {
-	SelectPlayers(context.Context, *SelectPlayersRequest) (*SelectPlayersResponse, error)
+	FetchPlayer(context.Context, *FetchPlayerRequest) (*FetchPlayerResponse, error)
+	CreatePlayer(context.Context, *CreatePlayersRequest) (*CreatePlayerResponse, error)
 	mustEmbedUnimplementedBaseBallApiServer()
 }
 
@@ -58,8 +70,11 @@ type BaseBallApiServer interface {
 type UnimplementedBaseBallApiServer struct {
 }
 
-func (UnimplementedBaseBallApiServer) SelectPlayers(context.Context, *SelectPlayersRequest) (*SelectPlayersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SelectPlayers not implemented")
+func (UnimplementedBaseBallApiServer) FetchPlayer(context.Context, *FetchPlayerRequest) (*FetchPlayerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchPlayer not implemented")
+}
+func (UnimplementedBaseBallApiServer) CreatePlayer(context.Context, *CreatePlayersRequest) (*CreatePlayerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePlayer not implemented")
 }
 func (UnimplementedBaseBallApiServer) mustEmbedUnimplementedBaseBallApiServer() {}
 
@@ -74,20 +89,38 @@ func RegisterBaseBallApiServer(s grpc.ServiceRegistrar, srv BaseBallApiServer) {
 	s.RegisterService(&BaseBallApi_ServiceDesc, srv)
 }
 
-func _BaseBallApi_SelectPlayers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SelectPlayersRequest)
+func _BaseBallApi_FetchPlayer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FetchPlayerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BaseBallApiServer).SelectPlayers(ctx, in)
+		return srv.(BaseBallApiServer).FetchPlayer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: BaseBallApi_SelectPlayers_FullMethodName,
+		FullMethod: BaseBallApi_FetchPlayer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BaseBallApiServer).SelectPlayers(ctx, req.(*SelectPlayersRequest))
+		return srv.(BaseBallApiServer).FetchPlayer(ctx, req.(*FetchPlayerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BaseBallApi_CreatePlayer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePlayersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BaseBallApiServer).CreatePlayer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BaseBallApi_CreatePlayer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BaseBallApiServer).CreatePlayer(ctx, req.(*CreatePlayersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,8 +133,12 @@ var BaseBallApi_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*BaseBallApiServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SelectPlayers",
-			Handler:    _BaseBallApi_SelectPlayers_Handler,
+			MethodName: "FetchPlayer",
+			Handler:    _BaseBallApi_FetchPlayer_Handler,
+		},
+		{
+			MethodName: "CreatePlayer",
+			Handler:    _BaseBallApi_CreatePlayer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -43,6 +43,7 @@ func NewStackDriverLoggerByName(name string) Logger {
 func NewStackDriverLogger(name string, funcUserAgernt FuncCtxValueStr) Logger {
 	config := zap.NewProductionConfig()
 	config.EncoderConfig.EncodeLevel = stackDriverLevelEncoder()
+	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
 
 	config.Development = false
 

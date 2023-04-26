@@ -50,7 +50,7 @@ func NewStackDriverLogger(name string, funcUserAgernt FuncCtxValueStr) Logger {
 	// TODO：本番のみここを設定してもよいかも。warnLevel以上のログを出すように
 	// config.Level = zap.NewAtomicLevelAt(zap.WarnLevel)
 
-	logger, err := config.Build(zap.AddCallerSkip(1))
+	logger, err := config.Build()
 	if err != nil {
 		panic(err)
 	}

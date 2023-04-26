@@ -8,17 +8,20 @@ import (
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/repositoryImpl"
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/transactionImpl"
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
+	"github.com/tomoya_kamaji/go-pkg/src/util/logging"
+	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 type baseBallApiServer struct {
-	db *gorm.DBProvider
+	db     *gorm.DBProvider
+	logger logging.Logger
 	pb.UnimplementedBaseBallApiServer
 }
 
-func NewApiServer(db *gorm.DBProvider) pb.BaseBallApiServer {
-	return &baseBallApiServer{db: db}
+func NewApiServer(db *gorm.DBProvider, logger logging.Logger) pb.BaseBallApiServer {
+	return &baseBallApiServer{db: db, logger: logger}
 }
 
 func (s *baseBallApiServer) FetchPlayer(ctx context.Context, in *pb.FetchPlayerRequest) (*pb.FetchPlayerResponse, error) {
@@ -26,6 +29,7 @@ func (s *baseBallApiServer) FetchPlayer(ctx context.Context, in *pb.FetchPlayerR
 	player, err := usecase.NewFetchPlayerUsecase(repositoryImpl.NewPlayerRepositoryImpl(s.db)).Run(ctx, playerId)
 
 	if err != nil {
+		s.logger.Error(ctx, "failed to fetch player", zap.Error(err))
 		return nil, status.Errorf(codes.NotFound, err.Error())
 	}
 

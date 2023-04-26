@@ -11,6 +11,7 @@ import (
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
 	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 	"github.com/tomoya_kamaji/go-pkg/src/api"
+	"github.com/tomoya_kamaji/go-pkg/src/util/logging"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -28,7 +29,7 @@ func main() {
 
 	// gRPCサーバーを作成
 	server := grpc.NewServer()
-	baseBallApi := api.NewApiServer(gorm.NewMainDB())
+	baseBallApi := api.NewApiServer(gorm.NewMainDB(), logging.NewStackDriverLoggerByName("baseball-api"))
 	pb.RegisterBaseBallApiServer(server, baseBallApi)
 	reflection.Register(server)
 	go func() {

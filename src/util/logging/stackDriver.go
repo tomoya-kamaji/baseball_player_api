@@ -33,13 +33,14 @@ type FuncCtxValueStr func(ctx context.Context) string
 type stackDriverLogger struct {
 	funcUserAgernt FuncCtxValueStr
 	logger         *zap.Logger
+	Logger
 }
 
-func NewStackDriverLoggerByName(name string) stackDriverLogger {
+func NewStackDriverLoggerByName(name string) Logger {
 	return NewStackDriverLogger(name, GetUserAgent)
 }
 
-func NewStackDriverLogger(name string, funcUserAgernt FuncCtxValueStr) stackDriverLogger {
+func NewStackDriverLogger(name string, funcUserAgernt FuncCtxValueStr) Logger {
 	config := zap.NewProductionConfig()
 	config.EncoderConfig.EncodeLevel = stackDriverLevelEncoder()
 
@@ -52,7 +53,7 @@ func NewStackDriverLogger(name string, funcUserAgernt FuncCtxValueStr) stackDriv
 	if err != nil {
 		panic(err)
 	}
-	return stackDriverLogger{
+	return &stackDriverLogger{
 		logger:         logger.Named(name),
 		funcUserAgernt: funcUserAgernt,
 	}

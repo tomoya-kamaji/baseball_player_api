@@ -46,21 +46,23 @@ func (s *baseBallApiServer) CreatePlayer(ctx context.Context, in *pb.CreatePlaye
 		HomeRuns:      in.GetHomeRuns(),
 		RunsBattedIn:  in.GetRunsBattedIn(),
 	}
-	player, err := usecase.NewCreatePlayerUsecase(transactionImpl.NewTransactionManagerImpl(s.db), repositoryImpl.NewPlayerRepositoryImpl(s.db)).
-		Run(ctx, param)
+	dto, err := usecase.NewCreatePlayerUsecase(
+		transactionImpl.NewTransactionManagerImpl(s.db),
+		repositoryImpl.NewPlayerRepositoryImpl(s.db),
+	).Run(ctx, param)
 
 	if err != nil {
-		return nil, status.Errorf(codes.NotFound, err.Error())
+		return nil, status.Errorf(codes.Internal, err.Error())
 	}
 
 	return &pb.CreatePlayerResponse{Player: &pb.Player{
-		Id:            string(player.ID),
-		UniformNumber: player.UniformNumber,
-		Name:          player.Name,
-		AtBats:        player.AtBats,
-		Hits:          player.Hits,
-		Walks:         player.Walks,
-		HomeRuns:      player.HomeRuns,
-		RunsBattedIn:  player.RunsBattedIn,
+		Id:            dto.ID,
+		UniformNumber: dto.UniformNumber,
+		Name:          dto.Name,
+		AtBats:        dto.AtBats,
+		Hits:          dto.Hits,
+		Walks:         dto.Walks,
+		HomeRuns:      dto.HomeRuns,
+		RunsBattedIn:  dto.RunsBattedIn,
 	}}, nil
 }

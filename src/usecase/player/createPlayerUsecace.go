@@ -28,8 +28,18 @@ type CreatePlayerUsecaseParam struct {
 	HomeRuns      int64
 	RunsBattedIn  int64
 }
+type CreatePlayerUsecaseDto struct {
+	ID            string
+	UniformNumber int64
+	Name          string
+	AtBats        int64
+	Hits          int64
+	Walks         int64
+	HomeRuns      int64
+	RunsBattedIn  int64
+}
 
-func (u *CreatePlayerUsecase) Run(c context.Context, param CreatePlayerUsecaseParam) (*domain.Player, error) {
+func (u *CreatePlayerUsecase) Run(ctx context.Context, param CreatePlayerUsecaseParam) (*CreatePlayerUsecaseDto, error) {
 	player := domain.CreatePlayer(
 		param.UniformNumber,
 		param.Name,
@@ -39,16 +49,29 @@ func (u *CreatePlayerUsecase) Run(c context.Context, param CreatePlayerUsecasePa
 		param.HomeRuns,
 		param.RunsBattedIn,
 	)
-	err := u.txMgr.RunInTransaction(c, func(ctx context.Context) error {
-		_, err := u.playerRepository.Create(ctx, player)
-		if err != nil {
+	err := u.txMgr.RunInTransaction(ctx, func(ctx context.Context) error {
+		if err := u.playerRepository.Create(ctx, player); err != nil {
 			return err
 		}
 		return nil
 	})
+
+	if err != nil {
+		return nil, err
+	}
+	createPlayer, err := u.playerRepository.GetByID(ctx, player.ID)
 	if err != nil {
 		return nil, err
 	}
 
-	return player, nil
+	return &CreatePlayerUsecaseDto{
+		ID:            createPlayer.ID.String(),
+		UniformNumber: createPlayer.UniformNumber,
+		Name:          createPlayer.Name,
+		AtBats:        createPlayer.AtBats,
+		Hits:          createPlayer.Hits,
+		Walks:         createPlayer.Walks,
+		HomeRuns:      createPlayer.HomeRuns,
+		RunsBattedIn:  createPlayer.RunsBattedIn,
+	}, nil
 }

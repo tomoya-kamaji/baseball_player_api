@@ -6,7 +6,7 @@ import (
 
 type PlayerEntity struct {
 	BaseModel
-	ID            string
+	ID            string `gorm:"primary_key"`
 	UniformNumber int64
 	Name          string
 	AtBats        int64

@@ -16,8 +16,9 @@ func NewPlayerRepositoryImpl(db *gorm.DBProvider) domain.PlayerRepository {
 	return &playerRepositoryImpl{db: db}
 }
 
-func (repo *playerRepositoryImpl) Create(c context.Context, player *domain.Player) (*domain.Player, error) {
+func (repo *playerRepositoryImpl) Create(c context.Context, player *domain.Player) error {
 	playerEntity := entity.PlayerEntity{
+		ID:            player.ID.String(),
 		UniformNumber: player.UniformNumber,
 		Name:          player.Name,
 		AtBats:        player.AtBats,
@@ -27,8 +28,9 @@ func (repo *playerRepositoryImpl) Create(c context.Context, player *domain.Playe
 		RunsBattedIn:  player.RunsBattedIn,
 	}
 
-	repo.db.Provide(c).Create(&playerEntity)
-	return playerEntity.ConvertToModel(), nil
+	repo.db.Provide(c).FirstOrCreate(&playerEntity)
+
+	return repo.db.Provide(c).Save(&playerEntity).Error
 }
 
 func (repo *playerRepositoryImpl) GetByID(c context.Context, ID domain.PlayerID) (*domain.Player, error) {

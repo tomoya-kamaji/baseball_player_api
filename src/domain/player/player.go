@@ -4,6 +4,10 @@ import "github.com/google/uuid"
 
 type PlayerID string
 
+func (id PlayerID) String() string {
+	return string(id)
+}
+
 func NewPlayerId() PlayerID {
 	playerId := PlayerID(uuid.New().String())
 	return playerId

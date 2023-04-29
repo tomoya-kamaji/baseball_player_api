@@ -2,7 +2,6 @@ package repositoryImpl
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -13,8 +12,7 @@ import (
 func TestUserRepository_Create(t *testing.T) {
 	// テストデータベースのセットアップ
 	ctx := context.Background()
-	db := testutil.NewTestMainDB()
-	repository := NewPlayerRepositoryImpl(db)
+	repository := NewPlayerRepositoryImpl(testutil.NewTestMainDB())
 
 	player := domain.CreatePlayer(
 		domain.CreatePlayerParam{
@@ -27,13 +25,9 @@ func TestUserRepository_Create(t *testing.T) {
 			Walks:         50,
 		},
 	)
-
 	repository.Create(ctx, player)
-
 	result, _ := repository.GetByID(ctx, player.ID)
 	expected := player
 
-	fmt.Printf("result: %v\n", result)
-	fmt.Printf("expected: %v\n", expected)
 	assert.Equal(t, result, expected)
 }

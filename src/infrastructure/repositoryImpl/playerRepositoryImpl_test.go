@@ -10,7 +10,6 @@ import (
 )
 
 func TestUserRepository_Create(t *testing.T) {
-	// テストデータベースのセットアップ
 	ctx := context.Background()
 	repository := NewPlayerRepositoryImpl(testutil.NewTestMainDB())
 

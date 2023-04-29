@@ -28,8 +28,6 @@ func (repo *playerRepositoryImpl) Create(c context.Context, player *domain.Playe
 		RunsBattedIn:  player.RunsBattedIn,
 	}
 
-	repo.db.Provide(c).FirstOrCreate(&playerEntity)
-
 	return repo.db.Provide(c).Save(&playerEntity).Error
 }
 

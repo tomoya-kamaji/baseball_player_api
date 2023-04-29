@@ -41,13 +41,15 @@ type CreatePlayerUsecaseDto struct {
 
 func (u *CreatePlayerUsecase) Run(ctx context.Context, param CreatePlayerUsecaseParam) (*CreatePlayerUsecaseDto, error) {
 	player := domain.CreatePlayer(
-		param.UniformNumber,
-		param.Name,
-		param.AtBats,
-		param.Hits,
-		param.Walks,
-		param.HomeRuns,
-		param.RunsBattedIn,
+		domain.CreatePlayerParam{
+			UniformNumber: param.UniformNumber,
+			Name:          param.Name,
+			AtBats:        param.AtBats,
+			Hits:          param.Hits,
+			Walks:         param.Walks,
+			HomeRuns:      param.HomeRuns,
+			RunsBattedIn:  param.RunsBattedIn,
+		},
 	)
 	err := u.txMgr.RunInTransaction(ctx, func(ctx context.Context) error {
 		if err := u.playerRepository.Create(ctx, player); err != nil {

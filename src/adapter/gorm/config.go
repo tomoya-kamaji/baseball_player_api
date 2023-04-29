@@ -10,8 +10,8 @@ var mc *MainMySQLConfig
 type MainMySQLConfig struct {
 	User      string `envconfig:"MYSQL_USER" default:"root"`
 	Password  string `envconfig:"MYSQL_PASSWORD" default:"password"`
-	Host      string `envconfig:"MYSQL_HOST" default:"mysql-container"`
-	Port      int    `envconfig:"MYSQL_PORT" default:"33060"`
+	Host      string `envconfig:"MYSQL_HOST" default:"mysql"`
+	Port      int    `envconfig:"MYSQL_PORT" default:"3307"`
 	Database  string `envconfig:"MYSQL_DB" default:"mydb"`
 	DebugMode bool   `envconfig:"MYSQL_DEBUGMODE" default:"true"`
 }

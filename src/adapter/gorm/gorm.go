@@ -58,6 +58,7 @@ func mySQL(cfg MainMySQLConfig) *gorm.DB {
 		err           error
 		retryStrategy = backoff.NewExponentialBackOff()
 	)
+	fmt.Printf("dURL: %v\n", dURL)
 
 	retryStrategy.MaxElapsedTime = time.Minute
 	if err := backoff.Retry(func() error {

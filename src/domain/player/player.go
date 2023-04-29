@@ -24,24 +24,26 @@ type Player struct {
 	RunsBattedIn  int64  // 打点数
 }
 
-func CreatePlayer(
-	UniformNumber int64,
-	Name string,
-	AtBats int64,
-	Hits int64,
-	Walks int64,
-	HomeRuns int64,
-	RunsBattedIn int64,
-) *Player {
+type CreatePlayerParam struct {
+	UniformNumber int64
+	Name          string
+	AtBats        int64
+	Hits          int64
+	Walks         int64
+	HomeRuns      int64
+	RunsBattedIn  int64
+}
+
+func CreatePlayer(param CreatePlayerParam) *Player {
 	player := Player{
 		ID:            NewPlayerId(),
-		UniformNumber: UniformNumber,
-		Name:          Name,
-		AtBats:        AtBats,
-		Hits:          Hits,
-		Walks:         Walks,
-		HomeRuns:      HomeRuns,
-		RunsBattedIn:  RunsBattedIn,
+		UniformNumber: param.UniformNumber,
+		Name:          param.Name,
+		AtBats:        param.AtBats,
+		Hits:          param.Hits,
+		Walks:         param.Walks,
+		HomeRuns:      param.HomeRuns,
+		RunsBattedIn:  param.RunsBattedIn,
 	}
 	return &player
 }

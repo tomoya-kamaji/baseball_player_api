@@ -6,7 +6,6 @@ import (
 	pb "github.com/tomoya_kamaji/go-pkg/grpc"
 	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/repositoryImpl"
-	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/transactionImpl"
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
 	"github.com/tomoya_kamaji/go-pkg/src/util/logging"
 	"go.uber.org/zap"
@@ -47,7 +46,7 @@ func (s *baseBallApiServer) CreatePlayer(ctx context.Context, in *pb.CreatePlaye
 		RunsBattedIn:  in.GetRunsBattedIn(),
 	}
 	dto, err := usecase.NewCreatePlayerUsecase(
-		transactionImpl.NewTransactionManagerImpl(s.db),
+		repositoryImpl.NewTransactionManagerImpl(s.db),
 		repositoryImpl.NewPlayerRepositoryImpl(s.db),
 	).Run(ctx, param)
 

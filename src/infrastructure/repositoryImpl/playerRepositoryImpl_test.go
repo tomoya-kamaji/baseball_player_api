@@ -2,6 +2,7 @@ package repositoryImpl
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,23 +11,34 @@ import (
 )
 
 func TestUserRepository_Create(t *testing.T) {
-	ctx := context.Background()
-	repository := NewPlayerRepositoryImpl(testutil.NewTestMainDB())
-
-	player := domain.CreatePlayer(
-		domain.CreatePlayerParam{
-			UniformNumber: 51,
-			Name:          "イチロー",
-			AtBats:        550,
-			Hits:          200,
-			HomeRuns:      10,
-			RunsBattedIn:  70,
-			Walks:         50,
+	tests := []struct {
+		name  string
+		input *domain.Player
+	}{
+		{
+			name: "プレイヤーが作成されること",
+			input: domain.CreatePlayer(
+				domain.CreatePlayerParam{
+					UniformNumber: 51,
+					Name:          "イチロー",
+					AtBats:        550,
+					Hits:          200,
+					HomeRuns:      10,
+					RunsBattedIn:  70,
+					Walks:         50,
+				},
+			),
 		},
-	)
-	repository.Create(ctx, player)
-	result, _ := repository.GetByID(ctx, player.ID)
-	expected := player
+	}
+	for _, td := range tests {
+		t.Run(fmt.Sprintf(": %s", td.name), func(t *testing.T) {
+			ctx := context.Background()
+			repository := NewPlayerRepositoryImpl(testutil.NewTestMainDB())
+			repository.Create(ctx, td.input)
+			result, _ := repository.GetByID(ctx, td.input.ID)
 
-	assert.Equal(t, result, expected)
+			// assert
+			assert.Equal(t, result, td.input)
+		})
+	}
 }

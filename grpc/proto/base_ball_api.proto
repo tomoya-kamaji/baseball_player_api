@@ -1,10 +1,12 @@
 syntax = "proto3";
 
 option go_package = ".;protobuf";
+import "google/protobuf/empty.proto";
 
 service BaseBallApi {
     rpc FetchPlayer (FetchPlayerRequest) returns (FetchPlayerResponse) {}
     rpc CreatePlayer (CreatePlayersRequest) returns (CreatePlayerResponse) {}
+    rpc Crawler(google.protobuf.Empty) returns(google.protobuf.Empty){}
 }
 
 message FetchPlayerRequest {
@@ -39,3 +41,5 @@ message Player {
     int64 home_runs = 7;
     int64 runs_batted_in = 8;
 }
+
+message Empty {}

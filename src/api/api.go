@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type baseBallApiServer struct {
@@ -64,4 +65,46 @@ func (s *baseBallApiServer) CreatePlayer(ctx context.Context, in *pb.CreatePlaye
 		HomeRuns:      dto.HomeRuns,
 		RunsBattedIn:  dto.RunsBattedIn,
 	}}, nil
+}
+
+func (s *baseBallApiServer) Crawler(ctx context.Context, in *emptypb.Empty) (*emptypb.Empty, error) {
+	// s.logger.Info(ctx, "start crawler")
+	// // ページ番号を指定して、URLを構築する
+	// url := fmt.Sprintf("https://baseball-data.com/stats/hitter-s/tpa-1.html")
+	// print(url)
+
+	// // HTTP GETリクエストを送信し、レスポンスを取得する
+	// res, err := http.Get(url)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer res.Body.Close()
+
+	// // レスポンスのHTMLを解析する
+
+	// fmt.Printf("\033[31m%#v\033[0m\n", res.Body)
+
+	// doc, err := goquery.NewDocumentFromReader(res.Body)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// // テーブルの各行を処理する
+	// doc.Find("table.data > tbody > tr").Each(func(i int, s *goquery.Selection) {
+	// 	// 各列の値を取得する
+	// 	rank := s.Find("td:nth-child(1)").Text()
+	// 	name := s.Find("td:nth-child(2)").Text()
+	// 	team := s.Find("td:nth-child(3)").Text()
+	// 	games := s.Find("td:nth-child(4)").Text()
+	// 	paStr := s.Find("td:nth-child(5)").Text()
+	// 	pa, err := strconv.Atoi(strings.ReplaceAll(paStr, ",", ""))
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+
+	// 	// 取得した値を出力する
+	// 	fmt.Printf("%s: %s (%s) - %d games, %d PA\n", rank, name, team, games, pa)
+	// })
+
+	return &emptypb.Empty{}, nil
 }

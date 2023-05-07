@@ -25,7 +25,9 @@ require (
 	github.com/ClickHouse/ch-go v0.53.0 // indirect
 	github.com/ClickHouse/clickhouse-go v1.5.4 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.7.0 // indirect
+	github.com/PuerkitoBio/goquery v1.8.1 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/apache/arrow/go/arrow v0.0.0-20211013220434-5962184e7a30 // indirect
 	github.com/aws/aws-sdk-go v1.17.7 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.9.2 // indirect

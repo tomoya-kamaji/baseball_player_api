@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -30,7 +31,7 @@ const (
 type BaseBallApiClient interface {
 	FetchPlayer(ctx context.Context, in *FetchPlayerRequest, opts ...grpc.CallOption) (*FetchPlayerResponse, error)
 	CreatePlayer(ctx context.Context, in *CreatePlayersRequest, opts ...grpc.CallOption) (*CreatePlayerResponse, error)
-	Crawler(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
+	Crawler(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type baseBallApiClient struct {
@@ -59,8 +60,8 @@ func (c *baseBallApiClient) CreatePlayer(ctx context.Context, in *CreatePlayersR
 	return out, nil
 }
 
-func (c *baseBallApiClient) Crawler(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *baseBallApiClient) Crawler(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, BaseBallApi_Crawler_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,7 +75,7 @@ func (c *baseBallApiClient) Crawler(ctx context.Context, in *Empty, opts ...grpc
 type BaseBallApiServer interface {
 	FetchPlayer(context.Context, *FetchPlayerRequest) (*FetchPlayerResponse, error)
 	CreatePlayer(context.Context, *CreatePlayersRequest) (*CreatePlayerResponse, error)
-	Crawler(context.Context, *Empty) (*Empty, error)
+	Crawler(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedBaseBallApiServer()
 }
 
@@ -88,7 +89,7 @@ func (UnimplementedBaseBallApiServer) FetchPlayer(context.Context, *FetchPlayerR
 func (UnimplementedBaseBallApiServer) CreatePlayer(context.Context, *CreatePlayersRequest) (*CreatePlayerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePlayer not implemented")
 }
-func (UnimplementedBaseBallApiServer) Crawler(context.Context, *Empty) (*Empty, error) {
+func (UnimplementedBaseBallApiServer) Crawler(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Crawler not implemented")
 }
 func (UnimplementedBaseBallApiServer) mustEmbedUnimplementedBaseBallApiServer() {}
@@ -141,7 +142,7 @@ func _BaseBallApi_CreatePlayer_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _BaseBallApi_Crawler_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -153,7 +154,7 @@ func _BaseBallApi_Crawler_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: BaseBallApi_Crawler_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BaseBallApiServer).Crawler(ctx, req.(*Empty))
+		return srv.(BaseBallApiServer).Crawler(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

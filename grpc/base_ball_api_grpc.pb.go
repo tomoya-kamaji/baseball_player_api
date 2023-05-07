@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	BaseBallApi_FetchPlayer_FullMethodName  = "/BaseBallApi/FetchPlayer"
 	BaseBallApi_CreatePlayer_FullMethodName = "/BaseBallApi/CreatePlayer"
+	BaseBallApi_Crawler_FullMethodName      = "/BaseBallApi/Crawler"
 )
 
 // BaseBallApiClient is the client API for BaseBallApi service.
@@ -29,6 +30,7 @@ const (
 type BaseBallApiClient interface {
 	FetchPlayer(ctx context.Context, in *FetchPlayerRequest, opts ...grpc.CallOption) (*FetchPlayerResponse, error)
 	CreatePlayer(ctx context.Context, in *CreatePlayersRequest, opts ...grpc.CallOption) (*CreatePlayerResponse, error)
+	Crawler(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type baseBallApiClient struct {
@@ -57,12 +59,22 @@ func (c *baseBallApiClient) CreatePlayer(ctx context.Context, in *CreatePlayersR
 	return out, nil
 }
 
+func (c *baseBallApiClient) Crawler(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, BaseBallApi_Crawler_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BaseBallApiServer is the server API for BaseBallApi service.
 // All implementations must embed UnimplementedBaseBallApiServer
 // for forward compatibility
 type BaseBallApiServer interface {
 	FetchPlayer(context.Context, *FetchPlayerRequest) (*FetchPlayerResponse, error)
 	CreatePlayer(context.Context, *CreatePlayersRequest) (*CreatePlayerResponse, error)
+	Crawler(context.Context, *Empty) (*Empty, error)
 	mustEmbedUnimplementedBaseBallApiServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedBaseBallApiServer) FetchPlayer(context.Context, *FetchPlayerR
 }
 func (UnimplementedBaseBallApiServer) CreatePlayer(context.Context, *CreatePlayersRequest) (*CreatePlayerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePlayer not implemented")
+}
+func (UnimplementedBaseBallApiServer) Crawler(context.Context, *Empty) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Crawler not implemented")
 }
 func (UnimplementedBaseBallApiServer) mustEmbedUnimplementedBaseBallApiServer() {}
 
@@ -125,6 +140,24 @@ func _BaseBallApi_CreatePlayer_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BaseBallApi_Crawler_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BaseBallApiServer).Crawler(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BaseBallApi_Crawler_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BaseBallApiServer).Crawler(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BaseBallApi_ServiceDesc is the grpc.ServiceDesc for BaseBallApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var BaseBallApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreatePlayer",
 			Handler:    _BaseBallApi_CreatePlayer_Handler,
+		},
+		{
+			MethodName: "Crawler",
+			Handler:    _BaseBallApi_Crawler_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

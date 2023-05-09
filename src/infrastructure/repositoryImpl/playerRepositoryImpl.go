@@ -31,6 +31,23 @@ func (repo *playerRepositoryImpl) Create(c context.Context, player *domain.Playe
 	return repo.db.Provide(c).Save(&playerEntity).Error
 }
 
+func (repo *playerRepositoryImpl) BulkUpsert(c context.Context, players []*domain.Player) error {
+	var playerEntities []entity.PlayerEntity
+	for _, player := range players {
+		playerEntities = append(playerEntities, entity.PlayerEntity{
+			ID:            player.ID.String(),
+			UniformNumber: player.UniformNumber,
+			Name:          player.Name,
+			AtBats:        player.AtBats,
+			Hits:          player.Hits,
+			Walks:         player.Walks,
+			HomeRuns:      player.HomeRuns,
+			RunsBattedIn:  player.RunsBattedIn,
+		})
+	}
+	return repo.db.Provide(c).Save(&playerEntities).Error
+}
+
 func (repo *playerRepositoryImpl) GetByID(c context.Context, ID domain.PlayerID) (*domain.Player, error) {
 	var playerEntity entity.PlayerEntity
 	if err := repo.db.Provide(c).First(&playerEntity, ID).Error; err != nil {

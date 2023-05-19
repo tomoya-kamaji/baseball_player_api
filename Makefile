@@ -4,6 +4,8 @@ help: # コマンド確認
 
 
 api-up: # api-server起動
+	swag init -g cmd/main.go 
+	docker-compose -f docs/docker-compose.yml up -d
 	docker-compose -f tools/docker-compose.yml up -d
 
 .PHONY: goose-create

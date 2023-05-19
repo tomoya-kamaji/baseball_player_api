@@ -1,0 +1,71 @@
+definitions:
+  internal.createPlayerRequest:
+    properties:
+      at_bats:
+        type: integer
+      hits:
+        type: integer
+      home_runs:
+        type: integer
+      name:
+        type: string
+      runs_batted_in:
+        type: integer
+      uniform_number:
+        type: integer
+      walks:
+        type: integer
+    required:
+    - at_bats
+    - hits
+    - home_runs
+    - name
+    - runs_batted_in
+    - uniform_number
+    - walks
+    type: object
+  internal.createPlayerResponse:
+    properties:
+      at_bats:
+        type: integer
+      hits:
+        type: integer
+      home_runs:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+      runs_batted_in:
+        type: integer
+      uniform_number:
+        type: integer
+      walks:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /players:
+    post:
+      consumes:
+      - application/json
+      description: プレイヤーを作成する
+      parameters:
+      - description: User information
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/internal.createPlayerRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/internal.createPlayerResponse'
+      summary: プレイヤーを作成する
+      tags:
+      - players
+swagger: "2.0"

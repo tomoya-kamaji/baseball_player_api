@@ -8,6 +8,15 @@ import (
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
 )
 
+// CreateUser godoc
+// @Summary プレイヤーを作成する
+// @Description　プレイヤーを作成する
+// @Tags players
+// @Accept json
+// @Produce json
+// @Param user body createPlayerRequest true "User information"
+// @Success 201 {object} createPlayerResponse
+// @Router /players [post]
 func CreatePlayer(ctx *gin.Context) {
 	var req createPlayerRequest
 	if err := http.ValidateBindJSON(ctx, &req); err != nil {

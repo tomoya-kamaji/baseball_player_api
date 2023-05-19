@@ -32,7 +32,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "User information",
-                        "name": "user",
+                        "name": "player",
                         "in": "body",
                         "required": true,
                         "schema": {
@@ -65,25 +65,39 @@ const docTemplate = `{
             ],
             "properties": {
                 "at_bats": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 100
                 },
                 "hits": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 30
                 },
                 "home_runs": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 5
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "string",
+                    "example": "田中太郎"
                 },
                 "runs_batted_in": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 20
                 },
                 "uniform_number": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
                 },
                 "walks": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 10
                 }
             }
         },

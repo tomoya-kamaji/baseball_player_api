@@ -2,18 +2,32 @@ definitions:
   internal.createPlayerRequest:
     properties:
       at_bats:
+        example: 100
+        format: int64
         type: integer
       hits:
+        example: 30
+        format: int64
         type: integer
       home_runs:
+        example: 5
+        format: int64
         type: integer
       name:
+        example: 田中太郎
+        format: string
         type: string
       runs_batted_in:
+        example: 20
+        format: int64
         type: integer
       uniform_number:
+        example: 1
+        format: int64
         type: integer
       walks:
+        example: 10
+        format: int64
         type: integer
     required:
     - at_bats
@@ -54,7 +68,7 @@ paths:
       parameters:
       - description: User information
         in: body
-        name: user
+        name: player
         required: true
         schema:
           $ref: '#/definitions/internal.createPlayerRequest'

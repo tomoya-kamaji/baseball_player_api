@@ -14,7 +14,7 @@ import (
 // @Tags players
 // @Accept json
 // @Produce json
-// @Param user body createPlayerRequest true "User information"
+// @Param player body createPlayerRequest true "User information"
 // @Success 201 {object} createPlayerResponse
 // @Router /players [post]
 func CreatePlayer(ctx *gin.Context) {

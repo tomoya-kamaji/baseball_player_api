@@ -7,6 +7,7 @@ import (
 
 func Init(api *gin.Engine) {
 	r := api.Group("/v1")
+
 	pl := r.Group("/players")
 	{
 		pl.POST("", internal.CreatePlayer)

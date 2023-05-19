@@ -10,6 +10,12 @@ import (
 
 func CreatePlayer(ctx *gin.Context) {
 	var req createPlayerRequest
+	if err := http.ValidateBindJSON(ctx, &req); err != nil {
+		http.Return400(ctx, err)
+		return
+	}
+
+	db := gorm.NewMainDB()
 	param := usecase.CreatePlayerUsecaseParam{
 		UniformNumber: req.UniformNumber,
 		Name:          req.Name,
@@ -19,8 +25,6 @@ func CreatePlayer(ctx *gin.Context) {
 		HomeRuns:      req.HomeRuns,
 		RunsBattedIn:  req.RunsBattedIn,
 	}
-
-	db := gorm.NewMainDB()
 	dto, err := usecase.NewCreatePlayerUsecase(
 		repositoryImpl.NewTransactionManagerImpl(db),
 		repositoryImpl.NewPlayerRepositoryImpl(db),

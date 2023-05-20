@@ -73,6 +73,38 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/players/{id}": {
+            "get": {
+                "description": "選手を作成する",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "選手を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/internal.createPlayerResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -126,33 +158,7 @@ const docTemplate = `{
             }
         },
         "internal.createPlayerResponse": {
-            "type": "object",
-            "properties": {
-                "at_bats": {
-                    "type": "integer"
-                },
-                "hits": {
-                    "type": "integer"
-                },
-                "home_runs": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "runs_batted_in": {
-                    "type": "integer"
-                },
-                "uniform_number": {
-                    "type": "integer"
-                },
-                "walks": {
-                    "type": "integer"
-                }
-            }
+            "type": "object"
         }
     }
 }`

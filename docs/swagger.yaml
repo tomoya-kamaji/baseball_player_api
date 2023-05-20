@@ -40,23 +40,6 @@ definitions:
     - walks
     type: object
   internal.createPlayerResponse:
-    properties:
-      at_bats:
-        type: integer
-      hits:
-        type: integer
-      home_runs:
-        type: integer
-      id:
-        type: string
-      name:
-        type: string
-      runs_batted_in:
-        type: integer
-      uniform_number:
-        type: integer
-      walks:
-        type: integer
     type: object
 host: localhost:50051
 info:
@@ -88,6 +71,27 @@ paths:
           schema:
             $ref: '#/definitions/internal.createPlayerResponse'
       summary: 選手を作成する
+      tags:
+      - players
+  /players/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 選手を作成する
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal.createPlayerResponse'
+      summary: 選手を取得する
       tags:
       - players
   /players/crawl:

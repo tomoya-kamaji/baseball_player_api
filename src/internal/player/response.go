@@ -1,11 +1,11 @@
 package internal
 
 type createPlayerResponse struct {
-	player *playerResponseModel
+	Player playerResponseModel `json:"player"`
 }
 
 type fetchPlayerResponse struct {
-	player *playerResponseModel
+	Player playerResponseModel `json:"player"`
 }
 
 type playerResponseModel struct {
@@ -28,8 +28,8 @@ func convertPlayerResponseModel(
 	walks int64,
 	homeRuns int64,
 	runsBattedIn int64,
-) *playerResponseModel {
-	return &playerResponseModel{
+) playerResponseModel {
+	return playerResponseModel{
 		Id:            id,
 		UniformNumber: uniformNumber,
 		Name:          name,

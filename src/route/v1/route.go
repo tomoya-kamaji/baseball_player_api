@@ -12,6 +12,6 @@ func Init(api *gin.Engine) {
 	{
 		pl.GET("/:id", internal.FetchPlayerById)
 		pl.POST("", internal.CreatePlayer)
-		pl.POST("crawl", internal.Crawler)
+		pl.POST("/crawl", internal.Crawler)
 	}
 }

@@ -16,12 +16,10 @@ import (
 // @Accept json
 // @Produce json
 // @Param id path string true "id"
-// @Success 200 {object} createPlayerResponse
-// @Router /players/:id [post]
+// @Success 200 {object} fetchPlayerResponse
+// @Router /players/{id} [get]
 func FetchPlayerById(ctx *gin.Context) {
-	// パスパラメータの値を取得します
 	id := ctx.Param("id")
-
 	db := gorm.NewMainDB()
 	dto, err := usecase.NewFetchPlayerUsecase(
 		repositoryImpl.NewPlayerRepositoryImpl(db),
@@ -31,8 +29,8 @@ func FetchPlayerById(ctx *gin.Context) {
 		http.Return500(ctx, err)
 		return
 	}
-	res := createPlayerResponse{
-		player: convertPlayerResponseModel(
+	res := fetchPlayerResponse{
+		Player: convertPlayerResponseModel(
 			dto.ID,
 			dto.UniformNumber,
 			dto.Name,
@@ -81,7 +79,7 @@ func CreatePlayer(ctx *gin.Context) {
 		return
 	}
 	res := createPlayerResponse{
-		player: convertPlayerResponseModel(
+		Player: convertPlayerResponseModel(
 			dto.ID,
 			dto.UniformNumber,
 			dto.Name,

@@ -9,7 +9,46 @@ import (
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
 )
 
-// CreateUser godoc
+// SearchPlayer godoc
+// @Summary 選手を取得する
+// @Description　選手を作成する
+// @Tags players
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Success 200 {object} fetchPlayerResponse
+// @Router /players/{id} [get]
+func SearchPlayer(ctx *gin.Context) {
+	id := ctx.Param("id")
+	db := gorm.NewMainDB()
+	dto, err := usecase.NewFetchPlayerUsecase(
+		repositoryImpl.NewPlayerRepositoryImpl(db),
+	).Run(ctx, id)
+	if err != nil {
+		config.GetLogger().Error(ctx, err.Error())
+		http.Return500(ctx, err)
+		return
+	}
+
+
+
+	
+	res := fetchPlayerResponse{
+		Player: convertPlayerResponseModel(
+			dto.ID,
+			dto.UniformNumber,
+			dto.Name,
+			dto.AtBats,
+			dto.Hits,
+			dto.Walks,
+			dto.HomeRuns,
+			dto.RunsBattedIn,
+		),
+	}
+	http.Return200(ctx, res)
+}
+
+// FetchPlayerById godoc
 // @Summary 選手を取得する
 // @Description　選手を作成する
 // @Tags players

@@ -30,9 +30,6 @@ func SearchPlayer(ctx *gin.Context) {
 		return
 	}
 
-
-
-	
 	res := fetchPlayerResponse{
 		Player: convertPlayerResponseModel(
 			dto.ID,

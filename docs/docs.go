@@ -22,7 +22,7 @@ const docTemplate = `{
     "paths": {
         "/players": {
             "post": {
-                "description": "プレイヤーを作成する",
+                "description": "選手を作成する",
                 "consumes": [
                     "application/json"
                 ],
@@ -32,7 +32,7 @@ const docTemplate = `{
                 "tags": [
                     "players"
                 ],
-                "summary": "プレイヤーを作成する",
+                "summary": "選手を作成する",
                 "parameters": [
                     {
                         "description": "User information",
@@ -50,6 +50,26 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/internal.createPlayerResponse"
                         }
+                    }
+                }
+            }
+        },
+        "/players/crawl": {
+            "post": {
+                "description": "\"https://baseball-data.com/stats/hitter-%v/tpa-1.html\" から選手情報をクロールする",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "選手情報のクロール",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     }
                 }
             }
@@ -144,7 +164,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/v1",
 	Schemes:          []string{},
 	Title:            "Baseball API",
-	Description:      "APIの説明(必須)",
+	Description:      "野球選手の成績を管理するAPIを提供する",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

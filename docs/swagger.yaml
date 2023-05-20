@@ -61,7 +61,7 @@ definitions:
 host: localhost:50051
 info:
   contact: {}
-  description: APIの説明(必須)
+  description: 野球選手の成績を管理するAPIを提供する
   license:
     name: ライセンス(必須)
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -72,7 +72,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: プレイヤーを作成する
+      description: 選手を作成する
       parameters:
       - description: User information
         in: body
@@ -87,7 +87,20 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/internal.createPlayerResponse'
-      summary: プレイヤーを作成する
+      summary: 選手を作成する
+      tags:
+      - players
+  /players/crawl:
+    post:
+      consumes:
+      - application/json
+      description: '"https://baseball-data.com/stats/hitter-%v/tpa-1.html" から選手情報をクロールする'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: 選手情報のクロール
       tags:
       - players
 swagger: "2.0"

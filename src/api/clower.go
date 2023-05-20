@@ -19,7 +19,7 @@ func (s *baseBallApiServer) Crawler(ctx context.Context, in *emptypb.Empty) (*em
 		fmt.Printf("=======経過時間: %f秒=======\n", time.Since(start).Seconds())
 	}()
 
-	err := usecase.NewBulkUpsertPlayerPlayerUsecase(
+	err := usecase.NewCrawlPlayerUsecase(
 		repositoryImpl.NewTransactionManagerImpl(s.db),
 		repositoryImpl.NewPlayerRepositoryImpl(s.db),
 	).Run(ctx)

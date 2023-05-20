@@ -9,8 +9,8 @@ import (
 )
 
 // CreateUser godoc
-// @Summary プレイヤーを作成する
-// @Description　プレイヤーを作成する
+// @Summary 選手を作成する
+// @Description　選手を作成する
 // @Tags players
 // @Accept json
 // @Produce json
@@ -54,16 +54,10 @@ func CreatePlayer(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 204
-// @Router /players [post]
+// @Router /players/crawl [post]
 func Crawler(ctx *gin.Context) {
-	var req createPlayerRequest
-	if err := http.ValidateBindJSON(ctx, &req); err != nil {
-		http.Return400(ctx, err)
-		return
-	}
-
 	db := gorm.NewMainDB()
-	usecase.NewBulkUpsertPlayerPlayerUsecase(
+	go usecase.NewCrawlPlayerUsecase(
 		repositoryImpl.NewTransactionManagerImpl(db),
 		repositoryImpl.NewPlayerRepositoryImpl(db),
 	).Run(ctx)

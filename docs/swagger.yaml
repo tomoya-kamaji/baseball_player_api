@@ -1,3 +1,4 @@
+basePath: /v1
 definitions:
   internal.createPlayerRequest:
     properties:
@@ -57,8 +58,15 @@ definitions:
       walks:
         type: integer
     type: object
+host: localhost:50051
 info:
   contact: {}
+  description: APIの説明(必須)
+  license:
+    name: ライセンス(必須)
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Baseball API
+  version: バージョン(1.0)
 paths:
   /players:
     post:

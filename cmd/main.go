@@ -9,7 +9,13 @@ const (
 	port = ":50051"
 )
 
-// HTTPサーバーを起動する
+// @title Baseball API
+// @version バージョン(1.0)
+// @description 野球選手の成績を管理するAPIを提供する
+// @license.name ライセンス(必須)
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:50051
+// @BasePath /v1
 func main() {
 	api := route.NewEngine()
 	v1.Init(api)

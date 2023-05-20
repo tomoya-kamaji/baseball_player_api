@@ -20,7 +20,6 @@ func main() {
 	api := route.NewEngine()
 	v1.Init(api)
 	api.Run(port)
-
 }
 
 // gRPCサーバーを起動する

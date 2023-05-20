@@ -53,5 +53,20 @@ func (repo *playerRepositoryImpl) GetByID(c context.Context, ID domain.PlayerID)
 	if err := repo.db.Provide(c).First(&playerEntity, ID).Error; err != nil {
 		return nil, err
 	}
-	return playerEntity.ConvertToModel(), nil
+	return repo.ConvertToModel(c, playerEntity), nil
+}
+
+func (repo *playerRepositoryImpl) ConvertToModel(c context.Context, playerEntity entity.PlayerEntity) *domain.Player {
+	return domain.ReConstractPlayer(
+		domain.ReConstractPlayerParam{
+			ID:            domain.PlayerID(playerEntity.ID),
+			UniformNumber: playerEntity.UniformNumber,
+			Name:          playerEntity.Name,
+			AtBats:        playerEntity.AtBats,
+			Hits:          playerEntity.Hits,
+			Walks:         playerEntity.Walks,
+			HomeRuns:      playerEntity.HomeRuns,
+			RunsBattedIn:  playerEntity.RunsBattedIn,
+		},
+	)
 }

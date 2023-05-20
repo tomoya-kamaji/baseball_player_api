@@ -3,10 +3,48 @@ package internal
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
+	"github.com/tomoya_kamaji/go-pkg/src/config"
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/repositoryImpl"
 	"github.com/tomoya_kamaji/go-pkg/src/pkg/http"
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
 )
+
+// CreateUser godoc
+// @Summary 選手を取得する
+// @Description　選手を作成する
+// @Tags players
+// @Accept json
+// @Produce json
+// @Param id path string true "id"
+// @Success 200 {object} createPlayerResponse
+// @Router /players/:id [post]
+func FetchPlayerById(ctx *gin.Context) {
+	// パスパラメータの値を取得します
+	id := ctx.Param("id")
+
+	db := gorm.NewMainDB()
+	dto, err := usecase.NewFetchPlayerUsecase(
+		repositoryImpl.NewPlayerRepositoryImpl(db),
+	).Run(ctx, id)
+	if err != nil {
+		config.GetLogger().Error(ctx, err.Error())
+		http.Return500(ctx, err)
+		return
+	}
+	res := createPlayerResponse{
+		player: convertPlayerResponseModel(
+			dto.ID,
+			dto.UniformNumber,
+			dto.Name,
+			dto.AtBats,
+			dto.Hits,
+			dto.Walks,
+			dto.HomeRuns,
+			dto.RunsBattedIn,
+		),
+	}
+	http.Return200(ctx, res)
+}
 
 // CreateUser godoc
 // @Summary 選手を作成する
@@ -42,8 +80,18 @@ func CreatePlayer(ctx *gin.Context) {
 		http.Return500(ctx, err)
 		return
 	}
-
-	res := convertcreatePlayerResponse(dto)
+	res := createPlayerResponse{
+		player: convertPlayerResponseModel(
+			dto.ID,
+			dto.UniformNumber,
+			dto.Name,
+			dto.AtBats,
+			dto.Hits,
+			dto.Walks,
+			dto.HomeRuns,
+			dto.RunsBattedIn,
+		),
+	}
 	http.Return201(ctx, res)
 }
 
@@ -57,10 +105,16 @@ func CreatePlayer(ctx *gin.Context) {
 // @Router /players/crawl [post]
 func Crawler(ctx *gin.Context) {
 	db := gorm.NewMainDB()
-	go usecase.NewCrawlPlayerUsecase(
-		repositoryImpl.NewTransactionManagerImpl(db),
-		repositoryImpl.NewPlayerRepositoryImpl(db),
-	).Run(ctx)
-
+	f := func() {
+		err := usecase.NewCrawlPlayerUsecase(
+			repositoryImpl.NewTransactionManagerImpl(db),
+			repositoryImpl.NewPlayerRepositoryImpl(db),
+		).Run(ctx)
+		if err != nil {
+			config.GetLogger().Error(ctx, err.Error())
+			return
+		}
+	}
+	go f()
 	http.Return204(ctx)
 }

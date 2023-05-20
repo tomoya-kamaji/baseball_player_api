@@ -1,8 +1,14 @@
 package internal
 
-import usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
-
 type createPlayerResponse struct {
+	player *playerResponseModel
+}
+
+type fetchPlayerResponse struct {
+	player *playerResponseModel
+}
+
+type playerResponseModel struct {
 	Id            string `json:"id"`
 	UniformNumber int64  `json:"uniform_number"`
 	Name          string `json:"name"`
@@ -13,15 +19,24 @@ type createPlayerResponse struct {
 	RunsBattedIn  int64  `json:"runs_batted_in"`
 }
 
-func convertcreatePlayerResponse(d *usecase.CreatePlayerUsecaseDto) *createPlayerResponse {
-	return &createPlayerResponse{
-		Id:            d.ID,
-		UniformNumber: d.UniformNumber,
-		Name:          d.Name,
-		AtBats:        d.AtBats,
-		Hits:          d.Hits,
-		Walks:         d.Walks,
-		HomeRuns:      d.HomeRuns,
-		RunsBattedIn:  d.RunsBattedIn,
+func convertPlayerResponseModel(
+	id string,
+	uniformNumber int64,
+	name string,
+	atBats int64,
+	hits int64,
+	walks int64,
+	homeRuns int64,
+	runsBattedIn int64,
+) *playerResponseModel {
+	return &playerResponseModel{
+		Id:            id,
+		UniformNumber: uniformNumber,
+		Name:          name,
+		AtBats:        atBats,
+		Hits:          hits,
+		Walks:         walks,
+		HomeRuns:      homeRuns,
+		RunsBattedIn:  runsBattedIn,
 	}
 }

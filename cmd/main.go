@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/tomoya_kamaji/go-pkg/src/config"
 	"github.com/tomoya_kamaji/go-pkg/src/route"
 	v1 "github.com/tomoya_kamaji/go-pkg/src/route/v1"
 )
@@ -18,6 +19,7 @@ const (
 // @BasePath /v1
 func main() {
 	api := route.NewEngine()
+	config.InitLogger()
 	v1.Init(api)
 	api.Run(port)
 }

@@ -11,5 +11,6 @@ func Init(api *gin.Engine) {
 	pl := r.Group("/players")
 	{
 		pl.POST("", internal.CreatePlayer)
+		pl.POST("clowl", internal.CreatePlayer)
 	}
 }

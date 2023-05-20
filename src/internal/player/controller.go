@@ -46,3 +46,27 @@ func CreatePlayer(ctx *gin.Context) {
 	res := convertcreatePlayerResponse(dto)
 	http.Return201(ctx, res)
 }
+
+// CreateUser godoc
+// @Summary 選手情報のクロール
+// @Description　"https://baseball-data.com/stats/hitter-%v/tpa-1.html" から選手情報をクロールする
+// @Tags players
+// @Accept json
+// @Produce json
+// @Success 204
+// @Router /players [post]
+func Crawler(ctx *gin.Context) {
+	var req createPlayerRequest
+	if err := http.ValidateBindJSON(ctx, &req); err != nil {
+		http.Return400(ctx, err)
+		return
+	}
+
+	db := gorm.NewMainDB()
+	usecase.NewBulkUpsertPlayerPlayerUsecase(
+		repositoryImpl.NewTransactionManagerImpl(db),
+		repositoryImpl.NewPlayerRepositoryImpl(db),
+	).Run(ctx)
+
+	http.Return204(ctx)
+}

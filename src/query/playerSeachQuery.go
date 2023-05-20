@@ -20,10 +20,10 @@ type PlayerSearchQuery interface {
 }
 
 type PlayerSearchQueryDTO struct {
-	Players []*Player
+	Players []*PlayerDTO
 }
 
-type Player struct {
+type PlayerDTO struct {
 	ID            string
 	UniformNumber int64
 	Name          string

@@ -6,6 +6,10 @@ help: # コマンド確認
 api-up: # api-server起動
 	docker-compose -f tools/docker-compose.yml up -d
 
+gen-swagger: # swagger起動
+	swag init -g cmd/main.go 
+	docker-compose -f docs/docker-compose.yml up -d	
+
 .PHONY: goose-create
 goose-create: # マイグレーションファイル作成 ex) make goose-create name=new_migration_name
 	MIGRATION_FILE=$(name) sh migrations/goose.sh create

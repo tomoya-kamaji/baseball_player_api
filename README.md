@@ -1,5 +1,22 @@
 # Onion Architecture for Golang
 
+## アプリケーション立ち上げ
+```
+// データベースのマイグレーション
+make goose-up
+
+// アプリケーションの立ち上げ
+make api-up
+```
+
+## SwaggerでAPI仕様書を作成＆閲覧
+```
+make gen-swagger
+```
+閲覧する場合は以下のURLにアクセス(Swagger UI)
+http://localhost:8002
+
+
 ## アプリケーション概要
 - 野球選手の成績を管理、閲覧する
 

@@ -1,5 +1,8 @@
 package internal
 
+type FetchPlayerQuery struct {
+	
+}
 type createPlayerRequest struct {
 	UniformNumber int64  `json:"uniform_number" binding:"required" format:"int64" example:"1"`
 	Name          string `json:"name" binding:"required" format:"string" example:"田中太郎"`

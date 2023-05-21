@@ -1,12 +1,21 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "野球選手の成績を管理するAPIを提供する",
+        "title": "Baseball API",
+        "contact": {},
+        "license": {
+            "name": "ライセンス(必須)",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "バージョン(1.0)"
     },
+    "host": "localhost:50051",
+    "basePath": "/v1",
     "paths": {
         "/players": {
             "post": {
-                "description": "プレイヤーを作成する",
+                "description": "選手を作成する",
                 "consumes": [
                     "application/json"
                 ],
@@ -16,7 +25,7 @@
                 "tags": [
                     "players"
                 ],
-                "summary": "プレイヤーを作成する",
+                "summary": "選手を作成する",
                 "parameters": [
                     {
                         "description": "User information",
@@ -31,6 +40,58 @@
                 "responses": {
                     "201": {
                         "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/internal.createPlayerResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/players/crawl": {
+            "post": {
+                "description": "\"https://baseball-data.com/stats/hitter-%v/tpa-1.html\" から選手情報をクロールする",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "選手情報のクロール",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/players/{id}": {
+            "get": {
+                "description": "選手を作成する",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "選手を取得する",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/internal.createPlayerResponse"
                         }
@@ -90,33 +151,7 @@
             }
         },
         "internal.createPlayerResponse": {
-            "type": "object",
-            "properties": {
-                "at_bats": {
-                    "type": "integer"
-                },
-                "hits": {
-                    "type": "integer"
-                },
-                "home_runs": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "runs_batted_in": {
-                    "type": "integer"
-                },
-                "uniform_number": {
-                    "type": "integer"
-                },
-                "walks": {
-                    "type": "integer"
-                }
-            }
+            "type": "object"
         }
     }
 }

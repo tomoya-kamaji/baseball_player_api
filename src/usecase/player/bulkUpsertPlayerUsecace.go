@@ -16,13 +16,13 @@ import (
 	"github.com/tomoya_kamaji/go-pkg/src/util/cast"
 )
 
-type BulkUpsertPlayerPlayerUsecase struct {
+type CrawlPlayerUsecase struct {
 	txMgr            transaction.TransactionManager
 	playerRepository domain.PlayerRepository
 }
 
-func NewBulkUpsertPlayerPlayerUsecase(txMgr transaction.TransactionManager, playerRepository domain.PlayerRepository) *BulkUpsertPlayerPlayerUsecase {
-	return &BulkUpsertPlayerPlayerUsecase{
+func NewCrawlPlayerUsecase(txMgr transaction.TransactionManager, playerRepository domain.PlayerRepository) *CrawlPlayerUsecase {
+	return &CrawlPlayerUsecase{
 		txMgr:            txMgr,
 		playerRepository: playerRepository,
 	}
@@ -49,7 +49,7 @@ type crawlJob struct {
 	siteUID  string
 }
 
-func (u *BulkUpsertPlayerPlayerUsecase) Run(ctx context.Context) error {
+func (u *CrawlPlayerUsecase) Run(ctx context.Context) error {
 	start := time.Now()
 
 	jobs := util.NewQueue[crawlJob]()
@@ -67,7 +67,7 @@ func (u *BulkUpsertPlayerPlayerUsecase) Run(ctx context.Context) error {
 	return nil
 }
 
-func (u *BulkUpsertPlayerPlayerUsecase) processJobsConcurrently(ctx context.Context, jobs util.Queue[crawlJob], concurrency int) {
+func (u *CrawlPlayerUsecase) processJobsConcurrently(ctx context.Context, jobs util.Queue[crawlJob], concurrency int) {
 	var wg sync.WaitGroup
 	jobCh := make(chan crawlJob, concurrency)
 
@@ -90,7 +90,7 @@ func (u *BulkUpsertPlayerPlayerUsecase) processJobsConcurrently(ctx context.Cont
 	wg.Wait()
 }
 
-func (u *BulkUpsertPlayerPlayerUsecase) processJob(ctx context.Context, job crawlJob) {
+func (u *CrawlPlayerUsecase) processJob(ctx context.Context, job crawlJob) {
 	teamName := job.teamName
 	siteUID := job.siteUID
 

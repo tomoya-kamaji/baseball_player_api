@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/tomoya_kamaji/go-pkg/src/config"
 	"github.com/tomoya_kamaji/go-pkg/src/route"
 	v1 "github.com/tomoya_kamaji/go-pkg/src/route/v1"
 )
@@ -9,12 +10,18 @@ const (
 	port = ":50051"
 )
 
-// HTTPサーバーを起動する
+// @title Baseball API
+// @version バージョン(1.0)
+// @description 野球選手の成績を管理するAPIを提供する
+// @license.name ライセンス(必須)
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:50051
+// @BasePath /v1
 func main() {
 	api := route.NewEngine()
+	config.InitLogger()
 	v1.Init(api)
 	api.Run(port)
-
 }
 
 // gRPCサーバーを起動する

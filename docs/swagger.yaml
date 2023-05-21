@@ -1,3 +1,4 @@
+basePath: /v1
 definitions:
   internal.createPlayerRequest:
     properties:
@@ -39,32 +40,22 @@ definitions:
     - walks
     type: object
   internal.createPlayerResponse:
-    properties:
-      at_bats:
-        type: integer
-      hits:
-        type: integer
-      home_runs:
-        type: integer
-      id:
-        type: string
-      name:
-        type: string
-      runs_batted_in:
-        type: integer
-      uniform_number:
-        type: integer
-      walks:
-        type: integer
     type: object
+host: localhost:50051
 info:
   contact: {}
+  description: 野球選手の成績を管理するAPIを提供する
+  license:
+    name: ライセンス(必須)
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Baseball API
+  version: バージョン(1.0)
 paths:
   /players:
     post:
       consumes:
       - application/json
-      description: プレイヤーを作成する
+      description: 選手を作成する
       parameters:
       - description: User information
         in: body
@@ -79,7 +70,41 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/internal.createPlayerResponse'
-      summary: プレイヤーを作成する
+      summary: 選手を作成する
+      tags:
+      - players
+  /players/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 選手を作成する
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal.createPlayerResponse'
+      summary: 選手を取得する
+      tags:
+      - players
+  /players/crawl:
+    post:
+      consumes:
+      - application/json
+      description: '"https://baseball-data.com/stats/hitter-%v/tpa-1.html" から選手情報をクロールする'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+      summary: 選手情報のクロール
       tags:
       - players
 swagger: "2.0"

@@ -35,7 +35,7 @@ type CreatePlayerParam struct {
 }
 
 func CreatePlayer(param CreatePlayerParam) *Player {
-	player := Player{
+	return &Player{
 		ID:            NewPlayerId(),
 		UniformNumber: param.UniformNumber,
 		Name:          param.Name,
@@ -45,5 +45,28 @@ func CreatePlayer(param CreatePlayerParam) *Player {
 		HomeRuns:      param.HomeRuns,
 		RunsBattedIn:  param.RunsBattedIn,
 	}
-	return &player
+}
+
+type ReConstractPlayerParam struct {
+	ID            PlayerID
+	UniformNumber int64
+	Name          string
+	AtBats        int64
+	Hits          int64
+	Walks         int64
+	HomeRuns      int64
+	RunsBattedIn  int64
+}
+
+func ReConstractPlayer(param ReConstractPlayerParam) *Player {
+	return &Player{
+		ID:            param.ID,
+		UniformNumber: param.UniformNumber,
+		Name:          param.Name,
+		AtBats:        param.AtBats,
+		Hits:          param.Hits,
+		Walks:         param.Walks,
+		HomeRuns:      param.HomeRuns,
+		RunsBattedIn:  param.RunsBattedIn,
+	}
 }

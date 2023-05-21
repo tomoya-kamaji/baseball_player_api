@@ -1,4 +1,4 @@
-package queryimpl
+package queryImpl
 
 import (
 	"context"
@@ -40,12 +40,8 @@ func (q *playerSearchQueryImpl) Run(c context.Context, param query.SearchParam) 
 	}
 
 	// ソート設定
-	if param.SortField != "" && param.SortOrder != "" {
-		sortOrder := "asc"
-		if param.SortOrder == "desc" {
-			sortOrder = "desc"
-		}
-		dbQuery = dbQuery.Order(fmt.Sprintf("%s %s", param.SortField, sortOrder))
+	if param.SortField != nil && param.SortOrder != nil {
+		dbQuery = dbQuery.Order(fmt.Sprintf("%s %s", *param.SortField, *param.SortOrder))
 	}
 
 	// 取得件数制限

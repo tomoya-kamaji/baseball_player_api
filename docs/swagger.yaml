@@ -40,6 +40,40 @@ definitions:
     - walks
     type: object
   internal.createPlayerResponse:
+    properties:
+      player:
+        $ref: '#/definitions/internal.playerResponseModel'
+    type: object
+  internal.fetchPlayerResponse:
+    properties:
+      player:
+        $ref: '#/definitions/internal.playerResponseModel'
+    type: object
+  internal.playerResponseModel:
+    properties:
+      at_bats:
+        type: integer
+      hits:
+        type: integer
+      home_runs:
+        type: integer
+      id:
+        type: string
+      name:
+        type: string
+      runs_batted_in:
+        type: integer
+      uniform_number:
+        type: integer
+      walks:
+        type: integer
+    type: object
+  internal.searchPlayerResponse:
+    properties:
+      players:
+        items:
+          $ref: '#/definitions/internal.playerResponseModel'
+        type: array
     type: object
 host: localhost:50051
 info:
@@ -90,7 +124,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/internal.createPlayerResponse'
+            $ref: '#/definitions/internal.fetchPlayerResponse'
       summary: 選手を取得する
       tags:
       - players
@@ -105,6 +139,67 @@ paths:
         "204":
           description: No Content
       summary: 選手情報のクロール
+      tags:
+      - players
+  /players/search:
+    get:
+      consumes:
+      - application/json
+      description: 選手を作成する
+      parameters:
+      - example: 10
+        format: int
+        in: query
+        name: limit
+        type: integer
+      - example: 20
+        format: int64
+        in: query
+        name: max_hits
+        type: integer
+      - example: 10
+        format: int64
+        in: query
+        name: max_home_runs
+        type: integer
+      - example: 20
+        format: int64
+        in: query
+        name: max_runs_batted_in
+        type: integer
+      - example: 10
+        format: int64
+        in: query
+        name: min_hits
+        type: integer
+      - example: 5
+        format: int64
+        in: query
+        name: min_home_runs
+        type: integer
+      - example: 10
+        format: int64
+        in: query
+        name: min_runs_batted_in
+        type: integer
+      - example: hits
+        format: string
+        in: query
+        name: sort_field
+        type: string
+      - example: asc
+        format: string
+        in: query
+        name: sort_order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal.searchPlayerResponse'
+      summary: 選手を検索する
       tags:
       - players
 swagger: "2.0"

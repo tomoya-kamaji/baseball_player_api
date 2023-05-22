@@ -4,43 +4,64 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 	"github.com/tomoya_kamaji/go-pkg/src/config"
+	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/queryImpl"
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/repositoryImpl"
 	"github.com/tomoya_kamaji/go-pkg/src/pkg/http"
+	"github.com/tomoya_kamaji/go-pkg/src/query"
 	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/player"
 )
 
 // SearchPlayer godoc
-// @Summary 選手を取得する
+// @Summary 選手を検索する
 // @Description　選手を作成する
 // @Tags players
 // @Accept json
 // @Produce json
-// @Param id path string true "id"
-// @Success 200 {object} fetchPlayerResponse
-// @Router /players/{id} [get]
+// @Param query query searchPlayerRequerst false "検索クエリ"
+// @Success 200 {object} searchPlayerResponse
+// @Router /players/search [get]
 func SearchPlayer(ctx *gin.Context) {
-	id := ctx.Param("id")
+	var req searchPlayerRequerst
+	if err := http.ValidateBindJSON(ctx, &req); err != nil {
+		http.Return400(ctx, err)
+		return
+	}
 	db := gorm.NewMainDB()
-	dto, err := usecase.NewFetchPlayerUsecase(
-		repositoryImpl.NewPlayerRepositoryImpl(db),
-	).Run(ctx, id)
+
+	sortField := query.SortField(req.SortField)
+	sortOrder := query.SortOrder(req.SortOrder)
+
+	dto, err := usecase.NewSearchPlayerUsecase(
+		queryImpl.NewPlayerSearchQueryImpl(db),
+	).Run(ctx, query.SearchParam{
+		MinHits:         req.MinHits,
+		MaxHits:         req.MaxHits,
+		MinHomeRuns:     req.MinHomeRuns,
+		MaxHomeRuns:     req.MaxHomeRuns,
+		MinRunsBattedIn: req.MinRunsBattedIn,
+		MaxRunsBattedIn: req.MaxRunsBattedIn,
+		SortField:       &sortField,
+		SortOrder:       &sortOrder,
+	})
+
 	if err != nil {
 		config.GetLogger().Error(ctx, err.Error())
 		http.Return500(ctx, err)
 		return
 	}
 
-	res := fetchPlayerResponse{
-		Player: convertPlayerResponseModel(
-			dto.ID,
-			dto.UniformNumber,
-			dto.Name,
-			dto.AtBats,
-			dto.Hits,
-			dto.Walks,
-			dto.HomeRuns,
-			dto.RunsBattedIn,
-		),
+	res := searchPlayerResponse{}
+	for _, p := range dto.Players {
+		res.Players = append(res.Players, convertPlayerResponseModel(
+			p.ID,
+			p.UniformNumber,
+			p.Name,
+			p.AtBats,
+			p.Hits,
+			p.Walks,
+			p.HomeRuns,
+			p.RunsBattedIn,
+		))
 	}
 	http.Return200(ctx, res)
 }

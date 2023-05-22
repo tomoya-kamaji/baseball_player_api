@@ -8,6 +8,10 @@ type fetchPlayerResponse struct {
 	Player playerResponseModel `json:"player"`
 }
 
+type searchPlayerResponse struct {
+	Players []playerResponseModel `json:"players"`
+}
+
 type playerResponseModel struct {
 	Id            string `json:"id"`
 	UniformNumber int64  `json:"uniform_number"`

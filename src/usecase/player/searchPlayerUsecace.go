@@ -3,44 +3,24 @@ package usecase
 import (
 	"context"
 
-	domain "github.com/tomoya_kamaji/go-pkg/src/domain/player"
+	"github.com/tomoya_kamaji/go-pkg/src/query"
 )
 
 type SearchPlayerUsecase struct {
-	playerRepository domain.PlayerRepository
+	playerQuery query.PlayerSearchQuery
 }
 
-func NewSearchPlayerUsecase(playerRepository domain.PlayerRepository) *SearchPlayerUsecase {
+func NewSearchPlayerUsecase(playerQuery query.PlayerSearchQuery) *SearchPlayerUsecase {
 	return &SearchPlayerUsecase{
-		playerRepository: playerRepository,
+		playerQuery: playerQuery,
 	}
 }
 
-type playerDTO struct {
-	ID            string
-	UniformNumber int64
-	Name          string
-	AtBats        int64
-	Hits          int64
-	Walks         int64
-	HomeRuns      int64
-	RunsBattedIn  int64
-}
+func (u *SearchPlayerUsecase) Run(c context.Context, param query.SearchParam) (*query.PlayerSearchQueryDTO, error) {
+	result, err := u.playerQuery.Run(c, param)
+	if err != nil {
+		return nil, err
+	}
 
-type SearchPlayerUsecaseDTO struct {
-	Players []playerDTO
-}
-
-func (u *SearchPlayerUsecase) Run(c context.Context, ID string) (*SearchPlayerUsecaseDTO, error) {
-	// var player *domain.Player
-	// player, err := u.playerRepository.GetByID(c, domain.PlayerID(ID))
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	var players []playerDTO
-	return &SearchPlayerUsecaseDTO{
-		Players: players,
-	}, nil
-
+	return result, nil
 }

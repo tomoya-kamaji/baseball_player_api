@@ -67,6 +67,94 @@
                 }
             }
         },
+        "/players/search": {
+            "get": {
+                "description": "選手を作成する",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "選手を検索する",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "format": "int",
+                        "example": 10,
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20,
+                        "name": "max_hits",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 10,
+                        "name": "max_home_runs",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20,
+                        "name": "max_runs_batted_in",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 10,
+                        "name": "min_hits",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 5,
+                        "name": "min_home_runs",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 10,
+                        "name": "min_runs_batted_in",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "example": "hits",
+                        "name": "sort_field",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "example": "asc",
+                        "name": "sort_order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/internal.searchPlayerResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/players/{id}": {
             "get": {
                 "description": "選手を作成する",
@@ -93,7 +181,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/internal.createPlayerResponse"
+                            "$ref": "#/definitions/internal.fetchPlayerResponse"
                         }
                     }
                 }
@@ -151,7 +239,60 @@
             }
         },
         "internal.createPlayerResponse": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "player": {
+                    "$ref": "#/definitions/internal.playerResponseModel"
+                }
+            }
+        },
+        "internal.fetchPlayerResponse": {
+            "type": "object",
+            "properties": {
+                "player": {
+                    "$ref": "#/definitions/internal.playerResponseModel"
+                }
+            }
+        },
+        "internal.playerResponseModel": {
+            "type": "object",
+            "properties": {
+                "at_bats": {
+                    "type": "integer"
+                },
+                "hits": {
+                    "type": "integer"
+                },
+                "home_runs": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "runs_batted_in": {
+                    "type": "integer"
+                },
+                "uniform_number": {
+                    "type": "integer"
+                },
+                "walks": {
+                    "type": "integer"
+                }
+            }
+        },
+        "internal.searchPlayerResponse": {
+            "type": "object",
+            "properties": {
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/internal.playerResponseModel"
+                    }
+                }
+            }
         }
     }
 }

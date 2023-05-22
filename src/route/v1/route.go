@@ -10,9 +10,9 @@ func Init(api *gin.Engine) {
 
 	pl := r.Group("/players")
 	{
-		pl.GET("/:id", internal.FetchPlayerById)
+		pl.GET("/search", internal.SearchPlayer)
+		// pl.GET("/:id", internal.FetchPlayerById)
 		pl.POST("", internal.CreatePlayer)
 		pl.POST("/crawl", internal.Crawler)
-		pl.GET("/search", internal.SearchPlayer)
 	}
 }

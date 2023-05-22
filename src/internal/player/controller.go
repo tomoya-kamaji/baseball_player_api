@@ -12,14 +12,14 @@ import (
 )
 
 // SearchPlayer godoc
-// @Summary 選手を取得する
+// @Summary 選手を検索する
 // @Description　選手を作成する
 // @Tags players
 // @Accept json
 // @Produce json
-// @Param param body searchPlayerRequerst true "検索条件"
-// @Success 200 {object} fetchPlayerResponse
-// @Router /players/{id} [get]
+// @Param query query searchPlayerRequerst false "検索クエリ"
+// @Success 200 {object} searchPlayerResponse
+// @Router /players/search [get]
 func SearchPlayer(ctx *gin.Context) {
 	var req searchPlayerRequerst
 	if err := http.ValidateBindJSON(ctx, &req); err != nil {

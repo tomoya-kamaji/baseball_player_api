@@ -3,6 +3,7 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Button from '@mui/material/Button'
 import { PlayersTable } from './features/search/conponents/Table'
+import fetchPlayers from './features/search/api/fetchPlayers'
 
 const style = css`
   background-color: red;

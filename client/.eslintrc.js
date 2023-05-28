@@ -5,7 +5,6 @@ module.exports = {
   },
   extends: [
     'plugin:react/recommended',
-    'standard-with-typescript',
     'airbnb/hooks',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking'
@@ -17,14 +16,16 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json']
   },
-  ignorePatterns: ['.eslintrc.js'],
-  plugins: ['react'],
+  ignorePatterns: ['.eslintrc.js,gen/*'],
+  plugins: ['react', 'import'],
   rules: {
     'no-use-before-define': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': [
       'error',

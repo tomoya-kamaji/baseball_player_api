@@ -1,11 +1,18 @@
 import { styled } from '@mui/system'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+import { useFetchPlayer } from '../api/fetchPlayers'
 
 const StyledTableCell = styled(TableCell)`
   /* Emotionのスタイルを適用する */
 `
 
 export const PlayersTable = (): JSX.Element => {
+  const { data, isLoading, isError, error } = useFetchPlayer('1')
+  console.log(data)
+  console.log(isLoading)
+  console.log(isError)
+  console.log(error)
+
   return (
     <TableContainer component={Paper}>
       <Table>

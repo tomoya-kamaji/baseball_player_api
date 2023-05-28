@@ -1,5 +1,10 @@
-import { type BaseEntity } from '@/types'
-
-export type Player = {
+export type PlayerApiModel = {
+  id: string
   name: string
-} & BaseEntity
+  uniformNumber: number
+  atBats: number
+  hits: number
+  homeRuns: number
+  runsBattedIn: number
+  walks: number
+}

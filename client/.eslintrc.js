@@ -20,10 +20,12 @@ module.exports = {
   plugins: ['react', 'import'],
   rules: {
     'no-use-before-define': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/consistent-type-definitions': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
     'import/prefer-default-export': 'off',
     'import/extensions': [
       'error',

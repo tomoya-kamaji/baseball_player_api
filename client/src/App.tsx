@@ -3,7 +3,7 @@ import React from 'react'
 import { css } from '@emotion/react'
 import Button from '@mui/material/Button'
 import { PlayersTable } from './features/search/conponents/Table'
-import fetchPlayers from './features/search/api/fetchPlayers'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const style = css`
   background-color: red;
@@ -11,12 +11,14 @@ const style = css`
     background-color: red;
   }
 `
-
 const App: React.FC = () => {
+  const queryClient = new QueryClient()
   return (
-    <Button variant="contained" css={style}>
-      <PlayersTable />
-    </Button>
+    <QueryClientProvider client={queryClient}>
+      <Button variant="contained" css={style}>
+        <PlayersTable />
+      </Button>
+    </QueryClientProvider>
   )
 }
 

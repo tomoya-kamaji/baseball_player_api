@@ -16,10 +16,10 @@ const (
 // @license.name ライセンス(必須)
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:50051
-// @BasePath /v1
 func main() {
 	api := route.NewEngine()
 	config.InitLogger()
+	
 	v1.Init(api)
 	api.Run(port)
 }

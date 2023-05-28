@@ -1,4 +1,3 @@
-basePath: /v1
 definitions:
   internal.createPlayerRequest:
     properties:
@@ -85,7 +84,7 @@ info:
   title: Baseball API
   version: バージョン(1.0)
 paths:
-  /players:
+  /v1/players:
     post:
       consumes:
       - application/json
@@ -107,7 +106,7 @@ paths:
       summary: 選手を作成する
       tags:
       - players
-  /players/{id}:
+  /v1/players/{id}:
     get:
       consumes:
       - application/json
@@ -128,7 +127,7 @@ paths:
       summary: 選手を取得する
       tags:
       - players
-  /players/crawl:
+  /v1/players/crawl:
     post:
       consumes:
       - application/json
@@ -141,7 +140,7 @@ paths:
       summary: 選手情報のクロール
       tags:
       - players
-  /players/search:
+  /v1/players/search:
     get:
       consumes:
       - application/json

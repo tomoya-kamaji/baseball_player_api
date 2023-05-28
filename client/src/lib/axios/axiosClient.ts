@@ -52,7 +52,7 @@ export const createApiClient = <Path extends ApiPath, Method extends HttpMethod>
   const request = async (): Promise<RequestResponse<Path, Method>> => {
     try {
       const res = await axios.request<ApiResponse<Path, Method>>({
-        baseURL: '',
+        baseURL: 'http://localhost:50051',
         method: option.httpMethod,
         url: path(),
         data: option.params?.body,
@@ -72,6 +72,7 @@ export const createApiClient = <Path extends ApiPath, Method extends HttpMethod>
           }
         }
       }
+      console.error(e)
       throw new Error('unexpected error')
     }
   }

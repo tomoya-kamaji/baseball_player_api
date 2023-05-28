@@ -1,42 +1,34 @@
-import { styled } from '@mui/system'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+import { Typography, Box } from '@mui/material'
 import { useFetchPlayer } from '../api/fetchPlayers'
 
-const StyledTableCell = styled(TableCell)`
+// const StyledTableCell = styled()
+;`
   /* Emotionのスタイルを適用する */
 `
 
-export const PlayersTable = (): JSX.Element => {
-  const { data, isLoading, isError, error } = useFetchPlayer('1')
-  console.log(data)
-  console.log(isLoading)
-  console.log(isError)
-  console.log(error)
+export const PlayerDetails = (): JSX.Element => {
+  const { data, isLoading, isError } = useFetchPlayer('6d89d4ec-0770-48f8-a6f2-882bb4b95fc9')
+  if (isLoading) return <div>loading...</div>
+  if (isError) return <div>データの読み込みに失敗しました</div>
+
+  const name = data?.player.name || ''
+  const uniformNumber = data?.player.uniformNumber || 0
+  const atBats = data?.player.atBats || 0
+  const hits = data?.player.hits || 0
+  const homeRuns = data?.player.homeRuns || 0
+  const runsBattedIn = data?.player.runsBattedIn || 0
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Column 2</StyledTableCell>
-            <StyledTableCell>Column 3</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <StyledTableCell>Value 1</StyledTableCell>
-            <StyledTableCell>Value 2</StyledTableCell>
-            <StyledTableCell>Value 3</StyledTableCell>
-          </TableRow>
-          <TableRow>
-            <StyledTableCell>Value 4</StyledTableCell>
-            <StyledTableCell>Value 5</StyledTableCell>
-            <StyledTableCell>Value 6</StyledTableCell>
-          </TableRow>
-          {/* 追加の行 */}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box>
+      <Typography variant="h5" align="left">
+        選手情報
+      </Typography>
+      <Typography align="left">Name: {name}</Typography>
+      <Typography align="left">Uniform Number: {uniformNumber}</Typography>
+      <Typography align="left">At Bats: {atBats}</Typography>
+      <Typography align="left">Hits: {hits}</Typography>
+      <Typography align="left">Home Runs: {homeRuns}</Typography>
+      <Typography align="left">Runs Batted In: {runsBattedIn}</Typography>
+    </Box>
   )
 }

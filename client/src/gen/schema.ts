@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  "/players": {
+  "/v1/players": {
     /** 選手を作成する */
     post: {
       parameters: {
@@ -21,7 +21,7 @@ export interface paths {
       };
     };
   };
-  "/players/{id}": {
+  "/v1/players/{id}": {
     /** 選手を作成する */
     get: {
       parameters: {
@@ -38,7 +38,7 @@ export interface paths {
       };
     };
   };
-  "/players/crawl": {
+  "/v1/players/crawl": {
     /** "https://baseball-data.com/stats/hitter-%v/tpa-1.html" から選手情報をクロールする */
     post: {
       responses: {
@@ -47,7 +47,7 @@ export interface paths {
       };
     };
   };
-  "/players/search": {
+  "/v1/players/search": {
     /** 選手を作成する */
     get: {
       parameters: {

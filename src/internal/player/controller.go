@@ -19,7 +19,7 @@ import (
 // @Produce json
 // @Param query query searchPlayerRequerst false "検索クエリ"
 // @Success 200 {object} searchPlayerResponse
-// @Router /players/search [get]
+// @Router /v1/players/search [get]
 func SearchPlayer(ctx *gin.Context) {
 	var req searchPlayerRequerst
 	if err := http.ValidateBindJSON(ctx, &req); err != nil {
@@ -74,7 +74,7 @@ func SearchPlayer(ctx *gin.Context) {
 // @Produce json
 // @Param id path string true "id"
 // @Success 200 {object} fetchPlayerResponse
-// @Router /players/{id} [get]
+// @Router /v1/players/{id} [get]
 func FetchPlayerById(ctx *gin.Context) {
 	id := ctx.Param("id")
 	db := gorm.NewMainDB()
@@ -109,7 +109,7 @@ func FetchPlayerById(ctx *gin.Context) {
 // @Produce json
 // @Param player body createPlayerRequest true "User information"
 // @Success 201 {object} createPlayerResponse
-// @Router /players [post]
+// @Router /v1/players [post]
 func CreatePlayer(ctx *gin.Context) {
 	var req createPlayerRequest
 	if err := http.ValidateBindJSON(ctx, &req); err != nil {
@@ -157,7 +157,7 @@ func CreatePlayer(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 204
-// @Router /players/crawl [post]
+// @Router /v1/players/crawl [post]
 func Crawler(ctx *gin.Context) {
 	db := gorm.NewMainDB()
 	f := func() {

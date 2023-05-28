@@ -11,9 +11,8 @@
         "version": "バージョン(1.0)"
     },
     "host": "localhost:50051",
-    "basePath": "/v1",
     "paths": {
-        "/players": {
+        "/v1/players": {
             "post": {
                 "description": "選手を作成する",
                 "consumes": [
@@ -47,7 +46,7 @@
                 }
             }
         },
-        "/players/crawl": {
+        "/v1/players/crawl": {
             "post": {
                 "description": "\"https://baseball-data.com/stats/hitter-%v/tpa-1.html\" から選手情報をクロールする",
                 "consumes": [
@@ -67,7 +66,7 @@
                 }
             }
         },
-        "/players/search": {
+        "/v1/players/search": {
             "get": {
                 "description": "選手を作成する",
                 "consumes": [
@@ -155,7 +154,7 @@
                 }
             }
         },
-        "/players/{id}": {
+        "/v1/players/{id}": {
             "get": {
                 "description": "選手を作成する",
                 "consumes": [

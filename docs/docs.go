@@ -20,7 +20,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/players": {
+        "/v1/players": {
             "post": {
                 "description": "選手を作成する",
                 "consumes": [
@@ -54,7 +54,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/players/crawl": {
+        "/v1/players/crawl": {
             "post": {
                 "description": "\"https://baseball-data.com/stats/hitter-%v/tpa-1.html\" から選手情報をクロールする",
                 "consumes": [
@@ -74,7 +74,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/players/search": {
+        "/v1/players/search": {
             "get": {
                 "description": "選手を作成する",
                 "consumes": [
@@ -162,7 +162,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/players/{id}": {
+        "/v1/players/{id}": {
             "get": {
                 "description": "選手を作成する",
                 "consumes": [
@@ -308,7 +308,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "バージョン(1.0)",
 	Host:             "localhost:50051",
-	BasePath:         "/v1",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Baseball API",
 	Description:      "野球選手の成績を管理するAPIを提供する",

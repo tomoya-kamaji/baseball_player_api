@@ -28,7 +28,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "swagger": "npx openapi-typescript@5 ../docs/swagger.yaml --output src/gen/schema.ts",
+    "swagger": "npx openapi-typescript@5 ../docs/swagger/swagger.yaml --output src/gen/schema.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

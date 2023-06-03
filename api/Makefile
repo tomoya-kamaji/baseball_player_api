@@ -7,8 +7,8 @@ api-up: # api-server起動
 	docker-compose -f tools/docker-compose.yml up -d
 
 gen-swagger: # swagger起動
-	swag init -g cmd/main.go 
-	docker-compose -f docs/docker-compose.yml up -d	
+	swag init -g cmd/main.go  --output ../docs/swagger
+	docker-compose -f ../docs/swagger/docker-compose.yml up -d	
 
 .PHONY: goose-create
 goose-create: # マイグレーションファイル作成 ex) make goose-create name=new_migration_name

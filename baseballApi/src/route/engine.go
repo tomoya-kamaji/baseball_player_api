@@ -10,9 +10,9 @@ func NewEngine() *gin.Engine {
 	router := gin.Default()
 	config := cors.DefaultConfig()
 	config.AllowCredentials = true
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowOrigins = []string{"http://localhost:3000", "http://localhost:8002"}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}
-	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type"}
+	config.AllowHeaders = []string{"Authorization", "Origin", "Content-Length", "Content-Type"}
 
 	router.Use(cors.New(config))
 	return router

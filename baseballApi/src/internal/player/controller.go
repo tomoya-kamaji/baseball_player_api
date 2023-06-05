@@ -83,7 +83,7 @@ func FetchPlayerById(ctx *gin.Context) {
 	).Run(ctx, id)
 	if err != nil {
 		config.GetLogger().Error(ctx, err.Error())
-		http.Return500(ctx, err)
+		http.Return404(ctx, err)
 		return
 	}
 	res := fetchPlayerResponse{

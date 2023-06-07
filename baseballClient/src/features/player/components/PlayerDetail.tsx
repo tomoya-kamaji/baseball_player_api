@@ -1,6 +1,6 @@
 import { Typography, Card, CardContent, styled, ThemeProvider } from '@mui/material'
-import { useFetchPlayer } from '../api/fetchPlayer'
 import { theme } from '../../../themes/theme'
+import { useFetchPlayerById } from '../hooks/useFetchPlayerById'
 
 const CustomCard = styled(Card)`
   width: 300px;
@@ -13,18 +13,8 @@ const CustomCard = styled(Card)`
   }
 `
 export const PlayerDetail = ({ playerId }: { playerId: string }): JSX.Element => {
-  const { data, isLoading, isError } = useFetchPlayer(playerId)
-  if (isLoading) return <div>loading...</div>
-  if (isError) return <div>データの読み込みに失敗しました</div>
-  if (data == undefined) {
-    return <div>対象の選手が存在しない</div>
-  }
-  const name = data.player.name
-  const uniformNumber = data.player.uniformNumber
-  const atBats = data.player.atBats
-  const hits = data.player.hits
-  const homeRuns = data.player.homeRuns
-  const runsBattedIn = data.player.runsBattedIn
+  const { player } = useFetchPlayerById(playerId)
+  if (player == undefined) return <div>対象の選手が存在しない</div>
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,12 +23,12 @@ export const PlayerDetail = ({ playerId }: { playerId: string }): JSX.Element =>
           <Typography variant="h5" align="left">
             選手情報{' '}
           </Typography>
-          <Typography align="left">名前: {name}</Typography>
-          <Typography align="left">背番号: {uniformNumber}</Typography>
-          <Typography align="left">打数: {atBats}</Typography>
-          <Typography align="left">ヒット: {hits}</Typography>
-          <Typography align="left">ホームラン: {homeRuns}</Typography>
-          <Typography align="left">四球: {runsBattedIn}</Typography>
+          <Typography align="left">名前: {player.name}</Typography>
+          <Typography align="left">背番号: {player.uniformNumber}</Typography>
+          <Typography align="left">打数: {player.atBats}</Typography>
+          <Typography align="left">ヒット: {player.hits}</Typography>
+          <Typography align="left">ホームラン: {player.homeRuns}</Typography>
+          <Typography align="left">四球: {player.runsBattedIn}</Typography>
         </CardContent>
       </CustomCard>
     </ThemeProvider>

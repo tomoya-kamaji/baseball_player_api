@@ -1,4 +1,4 @@
-import { useFetch } from '@/lib/hooks/useFetch'
+import { useFetch } from '../../..//lib/hooks/useFetch'
 
 export function useFetchPlayerById(id: string) {
   const { data, error } = useFetch({

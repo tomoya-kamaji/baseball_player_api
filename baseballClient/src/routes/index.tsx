@@ -1,14 +1,19 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
-import { Player } from '../features/player/routes/Player'
+import { PlayerIndexRoute, PlayerDetailRoute } from '../features/player/routes/Player'
+
+function HomeRedirect() {
+  return <Navigate to="/player/" replace />
+}
 
 export const RouterConfig = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/player/:id" element={<Player />} />
+          <Route path="/" element={<HomeRedirect />} />
+          <Route path="/player/" element={<PlayerIndexRoute />} />
+          <Route path="/player/:id" element={<PlayerDetailRoute />} />
         </Routes>
       </BrowserRouter>
     </>

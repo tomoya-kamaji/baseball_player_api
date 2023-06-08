@@ -17,11 +17,11 @@ import (
 // @Tags players
 // @Accept json
 // @Produce json
-// @Param query query searchPlayerRequerst false "検索クエリ"
+// @Param query query searchPlayerRequest false "検索クエリ"
 // @Success 200 {object} searchPlayerResponse
 // @Router /v1/players/search [get]
 func SearchPlayer(ctx *gin.Context) {
-	var req searchPlayerRequerst
+	var req searchPlayerRequest // ここがおかしい
 	if err := http.ValidateBindJSON(ctx, &req); err != nil {
 		http.Return400(ctx, err)
 		return

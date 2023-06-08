@@ -1,6 +1,6 @@
 package internal
 
-type searchPlayerRequerst struct {
+type searchPlayerRequest struct {
 	MinHits         int64  `json:"min_hits" binding:"omitempty" format:"int64" example:"10"`
 	MaxHits         int64  `json:"max_hits" binding:"omitempty" format:"int64" example:"20"`
 	MinHomeRuns     int64  `json:"min_home_runs" binding:"omitempty" format:"int64" example:"5"`

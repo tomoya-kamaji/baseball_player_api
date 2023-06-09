@@ -11,7 +11,8 @@ export type SearchParam = {
 }
 
 export type FetchPlayerApiModel = {
-  player: PlayerModel
+  player: PlayerModel | undefined
+  error: Error | undefined
 }
 
 export type SearchPlayerApiModel = {
@@ -28,4 +29,5 @@ export type PlayerModel = {
   homeRuns: number
   runsBattedIn: number
   walks: number
+  // 打率
 }

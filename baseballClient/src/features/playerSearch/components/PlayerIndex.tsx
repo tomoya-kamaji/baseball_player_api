@@ -1,8 +1,4 @@
 import {
-  Typography,
-  Card,
-  CardContent,
-  styled,
   ThemeProvider,
   TableContainer,
   Paper,
@@ -10,16 +6,19 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody
+  TableBody,
+  Link
 } from '@mui/material'
 import { theme } from '../../../themes/theme'
 import { useSearchPlayers } from '../hooks/useSearchPlayers'
+import { Link as RouterLink } from 'react-router-dom'
 import { SearchParam } from '../types'
+import { battingAverageToDisplay } from '../function'
 
 export const PlayerIndex = ({ param }: { param: SearchParam }): JSX.Element => {
   const { players } = useSearchPlayers(param)
 
-  const headers = ['名前', '背番号', '打数', 'ヒット数', '本塁打', '打点', '四球']
+  const headers = ['名前', '背番号', '打率', '打数', 'ヒット数', '本塁打', '打点', '四球']
   return (
     <ThemeProvider theme={theme}>
       <TableContainer component={Paper}>
@@ -37,9 +36,12 @@ export const PlayerIndex = ({ param }: { param: SearchParam }): JSX.Element => {
             {players.map((p) => (
               <TableRow key={p.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
-                  {p.name}
+                  <Link component={RouterLink} to={`/player/${p.id}`}>
+                    {p.name}
+                  </Link>
                 </TableCell>
                 <TableCell align="right">{p.uniformNumber}</TableCell>
+                <TableCell align="right">{battingAverageToDisplay(p.hits, p.atBats)}</TableCell>
                 <TableCell align="right">{p.atBats}</TableCell>
                 <TableCell align="right">{p.hits}</TableCell>
                 <TableCell align="right">{p.homeRuns}</TableCell>

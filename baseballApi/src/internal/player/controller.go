@@ -22,7 +22,7 @@ import (
 // @Router /v1/players/search [get]
 func SearchPlayer(ctx *gin.Context) {
 	var req searchPlayerRequest // ここがおかしい
-	if err := http.ValidateBindJSON(ctx, &req); err != nil {
+	if err := http.ValidateBindQuery(ctx, &req); err != nil {
 		http.Return400(ctx, err)
 		return
 	}

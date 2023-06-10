@@ -1,9 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { PlayerDetail, PlayerIndex } from './components'
-import { createContext, useState } from 'react'
-import React from 'react'
 import { SearchParam } from './types/index'
-import { SearchContext } from './store'
 
 export const PlayerSearchRoute = () => {
   const searchParam: SearchParam = {
@@ -17,7 +14,6 @@ export const PlayerSearchRoute = () => {
     sortField: 'hits',
     sortOrder: 'desc'
   }
-
   return <PlayerIndex param={searchParam} />
 }
 

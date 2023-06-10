@@ -10,14 +10,15 @@ import {
   Link
 } from '@mui/material'
 import { theme } from '../../../themes/theme'
-import { useSearchPlayers } from '../hooks/useSearchPlayers'
+import { useSearchPlayers } from '../api/useSearchPlayers'
 import { Link as RouterLink } from 'react-router-dom'
 import { SearchParam } from '../types'
 import { battingAverageToDisplay } from '../function'
 
 export const PlayerIndex = ({ param }: { param: SearchParam }): JSX.Element => {
-  const { players } = useSearchPlayers(param)
+  const { players, error } = useSearchPlayers(param)
 
+  if (error) return <div>読み込みに失敗しました</div>
   const headers = ['名前', '背番号', '打率', '打数', 'ヒット数', '本塁打', '打点', '四球']
   return (
     <ThemeProvider theme={theme}>

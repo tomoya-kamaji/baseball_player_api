@@ -15,7 +15,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { battingAverageToDisplay } from '../function'
 import { useSearchParamStore } from '../store/useCountStare'
 
-export const PlayerIndex = (): JSX.Element => {
+export const PlayerList = (): JSX.Element => {
   const { searchParam } = useSearchParamStore()
   console.log(searchParam)
   const { players, error } = useSearchPlayers(searchParam)

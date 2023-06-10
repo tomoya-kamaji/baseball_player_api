@@ -6,8 +6,8 @@ export type SearchParam = {
   minHits?: number
   minHomeRuns?: number
   minRunsBattedIn?: number
-  sortField?: 'hits' | 'home_runs' | 'runs_batted_in'
-  sortOrder?: 'asc' | 'desc'
+  sortField?: string
+  sortOrder?: string
 }
 
 export type FetchPlayerApiModel = {

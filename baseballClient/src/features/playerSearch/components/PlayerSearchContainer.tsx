@@ -1,6 +1,12 @@
-import { PlayerIndex } from './PlayerIndex';
-
+import { PlayerList } from './PlayerList'
+import { PlayerSearchFilter } from './PlayerSearchFilter'
 
 export const PlayerSearchContainer = (): JSX.Element => {
-  return <PlayerIndex />
+  return (
+    <div>
+      <h2>選手検索</h2>
+      <PlayerSearchFilter />
+      <PlayerList />
+    </div>
+  )
 }

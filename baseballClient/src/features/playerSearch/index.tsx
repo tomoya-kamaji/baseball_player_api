@@ -1,20 +1,8 @@
 import { useParams } from 'react-router-dom'
 import { PlayerDetail, PlayerIndex } from './components'
-import { SearchParam } from './types/index'
 
 export const PlayerSearchRoute = () => {
-  const searchParam: SearchParam = {
-    limit: 10,
-    maxHits: undefined,
-    maxHomeRuns: undefined,
-    maxRunsBattedIn: undefined,
-    minHits: undefined,
-    minHomeRuns: undefined,
-    minRunsBattedIn: undefined,
-    sortField: 'hits',
-    sortOrder: 'desc'
-  }
-  return <PlayerIndex param={searchParam} />
+  return <PlayerIndex />
 }
 
 export const PlayerDetailRoute = () => {

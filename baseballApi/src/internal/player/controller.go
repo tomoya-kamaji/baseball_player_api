@@ -42,6 +42,7 @@ func SearchPlayer(ctx *gin.Context) {
 		MaxRunsBattedIn: req.MaxRunsBattedIn,
 		SortField:       &sortField,
 		SortOrder:       &sortOrder,
+		Limit:           req.Limit,
 	})
 
 	if err != nil {

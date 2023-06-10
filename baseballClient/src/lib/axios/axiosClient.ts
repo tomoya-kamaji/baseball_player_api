@@ -37,8 +37,8 @@ export const createApiClient = <Path extends ApiPath, Method extends HttpMethod>
 
     const searchParam = new URLSearchParams()
     Object.entries(option.params?.query ?? {}).forEach(([key, value]) => {
-      if (typeof value === 'string') {
-        searchParam.set(key, value)
+      if (typeof value === 'string' || typeof value === 'number') {
+        searchParam.set(key, String(value))
       }
     })
 

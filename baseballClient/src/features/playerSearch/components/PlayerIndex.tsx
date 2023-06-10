@@ -12,11 +12,13 @@ import {
 import { theme } from '../../../themes/theme'
 import { useSearchPlayers } from '../api/useSearchPlayers'
 import { Link as RouterLink } from 'react-router-dom'
-import { SearchParam } from '../types'
 import { battingAverageToDisplay } from '../function'
+import { useSearchParamStore } from '../store/useCountStare'
 
-export const PlayerIndex = ({ param }: { param: SearchParam }): JSX.Element => {
-  const { players, error } = useSearchPlayers(param)
+export const PlayerIndex = (): JSX.Element => {
+  const { searchParam } = useSearchParamStore()
+  console.log(searchParam)
+  const { players, error } = useSearchPlayers(searchParam)
 
   if (error) return <div>読み込みに失敗しました</div>
   const headers = ['名前', '背番号', '打率', '打数', 'ヒット数', '本塁打', '打点', '四球']
@@ -35,7 +37,7 @@ export const PlayerIndex = ({ param }: { param: SearchParam }): JSX.Element => {
           </TableHead>
           <TableBody>
             {players.map((p) => (
-              <TableRow key={p.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableRow key={p.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row">
                   <Link component={RouterLink} to={`/player/${p.id}`}>
                     {p.name}

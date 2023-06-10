@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom'
-import { PlayerDetail, PlayerIndex } from './components'
+import { PlayerSearchContainer } from './components/PlayerSearchContainer'
+import { PlayerDetail } from './components/PlayerDetail'
 
 export const PlayerSearchRoute = () => {
-  return <PlayerIndex />
+  return <PlayerSearchContainer />
 }
 
 export const PlayerDetailRoute = () => {

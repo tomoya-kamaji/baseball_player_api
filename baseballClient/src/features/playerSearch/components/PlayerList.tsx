@@ -15,13 +15,52 @@ import { Link as RouterLink } from 'react-router-dom'
 import { battingAverageToDisplay } from '../function'
 import { useSearchParamStore } from '../store/useCountStare'
 
+const headers = [
+  {
+    name: '名前',
+    key: 'name'
+  },
+  {
+    name: '背番号',
+    key: 'uniformNumber'
+  },
+  {
+    name: '打率',
+    key: 'battingAverage'
+  },
+  {
+    name: '打数',
+    key: 'atBats'
+  },
+  {
+    name: 'ヒット数',
+    key: 'hits'
+  },
+  {
+    name: '本塁打',
+    key: 'homeRuns'
+  },
+  {
+    name: '打点',
+    key: 'runsBattedIn'
+  },
+  {
+    name: '四球',
+    key: 'walks'
+  }
+]
+
 export const PlayerList = (): JSX.Element => {
-  const { searchParam } = useSearchParamStore()
-  console.log(searchParam)
+  const { searchParam, setSearchParam } = useSearchParamStore()
   const { players, error } = useSearchPlayers(searchParam)
 
+  const sort = (sortField: string) => {
+    setSearchParam({
+      sortField: sortField
+    })
+  }
+
   if (error) return <div>読み込みに失敗しました</div>
-  const headers = ['名前', '背番号', '打率', '打数', 'ヒット数', '本塁打', '打点', '四球']
   return (
     <ThemeProvider theme={theme}>
       <TableContainer component={Paper}>
@@ -29,10 +68,10 @@ export const PlayerList = (): JSX.Element => {
           <TableHead>
             <TableRow>
               {headers.map((header, index) => (
-                <TableCell align={index === 0 ? 'left' : 'right'} key={header}>
-                  {header}
+                <TableCell align={index === 0 ? 'left' : 'right'} key={header.key} onClick={() => sort(header.key)}>
+                  {header.name}
                 </TableCell>
-              ))}{' '}
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>

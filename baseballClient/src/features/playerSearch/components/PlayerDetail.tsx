@@ -1,6 +1,6 @@
 import { Typography, Card, CardContent, styled, ThemeProvider } from '@mui/material'
 import { theme } from '../../../themes/theme'
-import { useFetchPlayerById } from '../hooks/useFetchPlayerById'
+import { useFetchPlayerById } from '../api/useFetchPlayerById'
 
 const CustomCard = styled(Card)`
   width: 300px;

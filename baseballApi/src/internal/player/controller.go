@@ -17,12 +17,12 @@ import (
 // @Tags players
 // @Accept json
 // @Produce json
-// @Param query query searchPlayerRequerst false "検索クエリ"
+// @Param query query searchPlayerRequest false "検索クエリ"
 // @Success 200 {object} searchPlayerResponse
 // @Router /v1/players/search [get]
 func SearchPlayer(ctx *gin.Context) {
-	var req searchPlayerRequerst
-	if err := http.ValidateBindJSON(ctx, &req); err != nil {
+	var req searchPlayerRequest // ここがおかしい
+	if err := http.ValidateBindQuery(ctx, &req); err != nil {
 		http.Return400(ctx, err)
 		return
 	}
@@ -42,6 +42,7 @@ func SearchPlayer(ctx *gin.Context) {
 		MaxRunsBattedIn: req.MaxRunsBattedIn,
 		SortField:       &sortField,
 		SortOrder:       &sortOrder,
+		Limit:           req.Limit,
 	})
 
 	if err != nil {

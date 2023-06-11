@@ -1,15 +1,15 @@
 package internal
 
-type searchPlayerRequerst struct {
-	MinHits         int64  `json:"min_hits" binding:"omitempty" format:"int64" example:"10"`
-	MaxHits         int64  `json:"max_hits" binding:"omitempty" format:"int64" example:"20"`
-	MinHomeRuns     int64  `json:"min_home_runs" binding:"omitempty" format:"int64" example:"5"`
-	MaxHomeRuns     int64  `json:"max_home_runs" binding:"omitempty" format:"int64" example:"10"`
-	MinRunsBattedIn int64  `json:"min_runs_batted_in" binding:"omitempty" format:"int64" example:"10"`
-	MaxRunsBattedIn int64  `json:"max_runs_batted_in" binding:"omitempty" format:"int64" example:"20"`
-	SortField       string `json:"sort_field" binding:"omitempty" format:"string" example:"hits"`
-	SortOrder       string `json:"sort_order" binding:"omitempty" format:"string" example:"asc"`
-	Limit           int    `json:"limit" binding:"omitempty" format:"int" example:"10"`
+type searchPlayerRequest struct {
+	MinHits         int64  `form:"min_hits" binding:"omitempty" format:"int64" example:"10"`
+	MaxHits         int64  `form:"max_hits" binding:"omitempty" format:"int64" example:"20"`
+	MinHomeRuns     int64  `form:"min_home_runs" binding:"omitempty" format:"int64" example:"5"`
+	MaxHomeRuns     int64  `form:"max_home_runs" binding:"omitempty" format:"int64" example:"10"`
+	MinRunsBattedIn int64  `form:"min_runs_batted_in" binding:"omitempty" format:"int64" example:"10"`
+	MaxRunsBattedIn int64  `form:"max_runs_batted_in" binding:"omitempty" format:"int64" example:"20"`
+	SortField       string `form:"sort_field" binding:"omitempty" format:"string" example:"hits"`
+	SortOrder       string `form:"sort_order" binding:"omitempty" format:"string" example:"asc"`
+	Limit           int    `form:"limit" binding:"omitempty" format:"int" example:"10"`
 }
 type createPlayerRequest struct {
 	UniformNumber int64  `json:"uniform_number" binding:"required" format:"int64" example:"1"`

@@ -1,19 +1,16 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import { useSearchParamStore } from '../store/useCountStare'
-// import { ChangeEvent, FormEvent } from 'react'
-// import { SearchParam } from '../types'
+import { parseValue } from '../function'
 
 export const PlayerSearchFilter = () => {
   const { searchParam, setSearchParam } = useSearchParamStore()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    setSearchParam({ ...searchParam, limit: 10 })
-  }
-
-  const handleSelectChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-    const { name, value } = event.target
-    setSearchParam({ ...searchParam, limit: 10 })
+    const { name, value, checked } = event.target
+    setSearchParam({
+      ...searchParam,
+      [name]: parseValue(name, value, checked)
+    })
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,17 +21,10 @@ export const PlayerSearchFilter = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        label="Limit"
-        name="limit"
-        type="number"
-        value={searchParam.limit || ''}
-        onChange={handleInputChange}
-      />
-      <TextField
         label="Max Hits"
         name="maxHits"
         type="number"
-        value={searchParam.maxHits || ''}
+        value={searchParam.maxHits !== undefined ? searchParam.maxHits.toString() : ''}
         onChange={handleInputChange}
       />
       <TextField

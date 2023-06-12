@@ -5,8 +5,10 @@ export const PlayerSearchContainer = (): JSX.Element => {
   return (
     <div>
       <h2>選手検索</h2>
-      <PlayerSearchFilter />
-      <PlayerList />
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <PlayerSearchFilter />
+        <PlayerList />
+      </div>
     </div>
   )
 }

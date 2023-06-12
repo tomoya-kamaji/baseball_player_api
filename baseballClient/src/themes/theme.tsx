@@ -1,6 +1,9 @@
 import { createTheme } from '@mui/material'
 
 export const theme = createTheme({
+  typography: {
+    fontFamily: 'Roboto, sans-serif'
+  },
   palette: {
     primary: {
       main: '#03734f' // プライマリカラーを青色に設定

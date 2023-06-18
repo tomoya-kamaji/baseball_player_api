@@ -2,7 +2,8 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	internal "github.com/tomoya_kamaji/go-pkg/src/internal/player"
+	healthIn "github.com/tomoya_kamaji/go-pkg/src/internal/health"
+	playerIn "github.com/tomoya_kamaji/go-pkg/src/internal/player"
 )
 
 func Init(api *gin.Engine) {
@@ -10,9 +11,10 @@ func Init(api *gin.Engine) {
 
 	pl := r.Group("/players")
 	{
-		pl.GET("/search", internal.SearchPlayer)
-		pl.GET("/:id", internal.FetchPlayerById)
-		pl.POST("", internal.CreatePlayer)
-		pl.POST("/crawl", internal.Crawler)
+		r.GET("/health", healthIn.HealthCheck)
+		pl.GET("/search", playerIn.SearchPlayer)
+		pl.GET("/:id", playerIn.FetchPlayerById)
+		pl.POST("", playerIn.CreatePlayer)
+		pl.POST("/crawl", playerIn.Crawler)
 	}
 }

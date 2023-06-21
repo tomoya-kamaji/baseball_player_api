@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	port = ":50051"
+	port = ":8082"
 )
 
 // @title Baseball API
@@ -15,7 +15,7 @@ const (
 // @description 野球選手の成績を管理するAPIを提供する
 // @license.name ライセンス(必須)
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host localhost:50051
+// @host localhost:8082
 func main() {
 	api := route.NewEngine()
 	config.InitLogger()

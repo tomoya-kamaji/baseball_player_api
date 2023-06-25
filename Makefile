@@ -12,3 +12,4 @@ docker-build:
 
 minikube-apply: docker-build
 	kubectl apply -k $(K8S_DIR)
+	minikube service baseball-api

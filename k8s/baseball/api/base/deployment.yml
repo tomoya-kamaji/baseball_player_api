@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baseball-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baseball-api  # ここのラベルがテンプレートのラベルと一致する必要があります
+  template:
+    metadata:
+      labels:
+        app: baseball-api  # ここと上記のラベルが一致するようにします
+    spec:
+      containers:
+        - name: baseball-api
+          image: baseball-api:latest # TODO: 変更する
+          imagePullPolicy: IfNotPresent # IfNotPresentはイメージがローカルに存在しない場合に限りPullを試みる設定
+          env:
+            - name: PROJECT_ID
+              value: project_id
+          ports:
+            - containerPort: 8082
+        - name: nginx
+          image: my-nginx:latest # TODO：変更する
+          imagePullPolicy: IfNotPresent # IfNotPresentはイメージがローカルに存在しない場合に限りPullを試みる設定
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+          ports:
+            - name: http-server
+              containerPort: 80

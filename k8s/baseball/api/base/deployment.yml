@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baseball-api
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: basesball-api
+    spec:
+      containers:
+        - name: baseball-api
+          image: baseball-api:latest # TODO: 変更する
+          env:
+            - name: PROJECT_ID
+              value: project_id
+          ports:
+            - containerPort: 8082
+          # livenessProbe:
+          #   initialDelaySeconds: 600
+          #   periodSeconds: 20
+          #   successThreshold: 1
+          #   failureThreshold: 5
+          #   exec:
+          #     command: ["/bin/grpc_health_probe", "-addr=:9998"]
+          # readinessProbe:
+          #   initialDelaySeconds: 600
+          #   periodSeconds: 20
+          #   successThreshold: 1
+          #   failureThreshold: 5
+          #   exec:
+          #     command: ["/bin/grpc_health_probe", "-addr=:9998"]
+        - name: nginx
+          image: k8s/baseball/api/docker/nginx:latest # TODO：変更する
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+          template:
+            metadata:
+              labels:
+                app: nginx
+          spec:
+            containers:
+            - name: nginx
+              image: my-nginx:1.0
+              ports:
+              - containerPort: 80
+        # livenessProbe:
+          #   httpGet:
+          #     path: /status
+          #     port: 80
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 5
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /healthz
+          #     port: 80
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   failureThreshold: 5
+          #   timeoutSeconds: 5
+

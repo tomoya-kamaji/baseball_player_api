@@ -1,6 +1,8 @@
 package gorm
 
 import (
+	"fmt"
+
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -14,6 +16,10 @@ type MainMySQLConfig struct {
 	Port      int    `envconfig:"MYSQL_PORT" default:"3307"`
 	Database  string `envconfig:"MYSQL_DB" default:"mydb"`
 	DebugMode bool   `envconfig:"MYSQL_DEBUGMODE" default:"true"`
+}
+
+func (c *MainMySQLConfig) ConnectionString() string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", c.User, c.Password, c.Host, c.Port, c.Database)
 }
 
 // LoadMainMySQLConfig ...

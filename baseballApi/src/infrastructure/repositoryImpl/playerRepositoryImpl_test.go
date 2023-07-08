@@ -21,7 +21,7 @@ func TestUserRepository_Create(t *testing.T) {
 				domain.CreatePlayerParam{
 					UniformNumber: 51,
 					Name:          "イチロー",
-					AtBats:        550,
+					AtBats:        551,
 					Hits:          200,
 					HomeRuns:      10,
 					RunsBattedIn:  70,

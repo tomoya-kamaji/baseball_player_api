@@ -2,13 +2,19 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/tomoya_kamaji/go-pkg/db_migrate"
 	"github.com/urfave/cli"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	app := cli.NewApp()
 
 	app.Commands = []cli.Command{
@@ -27,8 +33,7 @@ func main() {
 		},
 	}
 
-	err := app.Run(os.Args)
-	if err != nil {
-		fmt.Println(err)
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal(err)
 	}
 }

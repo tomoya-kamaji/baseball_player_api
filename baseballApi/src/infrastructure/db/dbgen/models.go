@@ -9,26 +9,27 @@ import (
 )
 
 type Book struct {
-	ID              int32
-	Title           sql.NullString
-	Author          sql.NullString
-	Publisher       sql.NullString
-	PublicationYear sql.NullInt32
-	Genre           sql.NullString
+	ID              int32          `json:"id"`
+	Title           sql.NullString `json:"title"`
+	Author          sql.NullString `json:"author"`
+	Publisher       sql.NullString `json:"publisher"`
+	PublicationYear sql.NullInt32  `json:"publication_year"`
+	Genre           sql.NullString `json:"genre"`
+	Isbn            sql.NullString `json:"isbn"`
 }
 
 type Loan struct {
-	ID         int32
-	BookID     sql.NullInt32
-	UserID     sql.NullInt32
-	LoanDate   sql.NullTime
-	DueDate    sql.NullTime
-	ReturnDate sql.NullTime
+	ID         int32         `json:"id"`
+	BookID     sql.NullInt32 `json:"book_id"`
+	UserID     sql.NullInt32 `json:"user_id"`
+	LoanDate   sql.NullTime  `json:"loan_date"`
+	DueDate    sql.NullTime  `json:"due_date"`
+	ReturnDate sql.NullTime  `json:"return_date"`
 }
 
 type User struct {
-	ID            int32
-	Name          sql.NullString
-	Address       sql.NullString
-	ContactNumber sql.NullString
+	ID            int32          `json:"id"`
+	Name          sql.NullString `json:"name"`
+	Address       sql.NullString `json:"address"`
+	ContactNumber sql.NullString `json:"contact_number"`
 }

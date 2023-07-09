@@ -37,6 +37,7 @@ func initTestMain() {
 		panic(err)
 	}
 	connectionString = cfg.ConnectionString()
+	print(connectionString)
 	db, err = sql.Open(driver, connectionString)
 	if err != nil {
 		panic(err)

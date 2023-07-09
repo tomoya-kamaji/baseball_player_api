@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/tomoya_kamaji/go-pkg/db/schema"
+	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/db/schema"
 	"github.com/urfave/cli"
 )
 

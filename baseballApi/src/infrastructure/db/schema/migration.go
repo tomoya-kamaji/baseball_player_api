@@ -14,6 +14,7 @@ import (
 	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
 )
 
+// urfave/cli経由で実行する
 func Migrate(cCtx *cli.Context) error {
 	schemaFile := cCtx.Args().Get(0)
 	// データベースへの接続情報を設定

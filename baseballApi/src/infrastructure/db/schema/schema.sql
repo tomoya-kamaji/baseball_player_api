@@ -4,7 +4,8 @@ CREATE TABLE books (
     author VARCHAR(255),
     publisher VARCHAR(255),
     publication_year INT,
-    genre VARCHAR(255)
+    genre VARCHAR(255),
+    isbn VARCHAR(255)
 );
 
 CREATE TABLE users (

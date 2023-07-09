@@ -2,7 +2,9 @@ version: "2"
 sql:
   - engine: "mysql"
     schema: "src/infrastructure/db/schema/schema.sql"
-    queries: "src/infrastructure/db/query/get_books.sql"
+    queries: 
+      - "src/infrastructure/db/query/books.sql"
+      - "src/infrastructure/db/query/users.sql"
     gen:
       go:
         package: "dbgen"

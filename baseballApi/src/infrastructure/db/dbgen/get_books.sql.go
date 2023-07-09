@@ -11,7 +11,7 @@ import (
 
 const getBook = `-- name: GetBook :one
 SELECT
-   id, title, author, publisher, publication_year, genre
+   id, title, author, publisher, publication_year, genre, isbn
 FROM
    books
 WHERE
@@ -30,6 +30,7 @@ func (q *Queries) GetBook(ctx context.Context, id int32) (Book, error) {
 		&i.Publisher,
 		&i.PublicationYear,
 		&i.Genre,
+		&i.Isbn,
 	)
 	return i, err
 }

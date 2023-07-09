@@ -12,15 +12,15 @@ gen-swagger: # swagger起動
 
 .PHONY: migrations
 build-cli: # cliのビルド
-	go build -o cli/main cli/main.go
+	go build -o src/cli/main src/cli/main.go
 
 migrate-dry-run: build-cli # migration dry-run
 	shema_path=$$(find . -name "schema.sql"); \
-	./cli/main migration $$shema_path
+	./src/cli/main migration $$shema_path
 
 migrate-apply: build-cli # migration apply
 	shema_path=$$(find . -name "schema.sql"); \
-	./cli/main migration $$shema_path apply
+	./src/cli/main migration $$shema_path apply
 
 
 # .PHONY: goose-create

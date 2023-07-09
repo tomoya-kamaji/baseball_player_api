@@ -1,0 +1,6 @@
+version: "1"
+packages:
+  - path: "src/infrastructure/db/dbgen"
+    engine: "mysql"
+    schema: "src/infrastructure/db/schema/schema.sql"
+    queries: "src/infrastructure/db/query/get_books.sql"

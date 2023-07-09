@@ -2,23 +2,38 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
-	"github.com/tomoya_kamaji/go-pkg/src/adapter/gorm"
-	"github.com/tomoya_kamaji/go-pkg/src/job"
-	"github.com/tomoya_kamaji/go-pkg/src/util/logging"
+	"github.com/joho/godotenv"
+	"github.com/tomoya_kamaji/go-pkg/db/schema"
 	"github.com/urfave/cli"
 )
 
 func main() {
-	baseBallJob := job.NewJobServer(gorm.NewMainDB(), logging.NewStackDriverLoggerByName("baseball-job"))
-	app := &cli.App{
-		Name:   "Webクローラー",
-		Usage:  "This app prints 'Hello, World!'",
-		Action: baseBallJob.Crawler,
-	}
-	err := app.Run(os.Args)
+	err := godotenv.Load()
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Error loading .env file")
+	}
+	app := cli.NewApp()
+
+	app.Commands = []cli.Command{
+		{
+			Name:  "greet",
+			Usage: "fight the loneliness!",
+			Action: func(*cli.Context) error {
+				fmt.Println("Hello friend!")
+				return nil
+			},
+		},
+		{
+			Name:   "migration",
+			Usage:  "DBマイグレーション",
+			Action: schema.Migrate,
+		},
+	}
+
+	if err := app.Run(os.Args); err != nil {
+		log.Fatal(err)
 	}
 }

@@ -33,10 +33,10 @@ func TestMain(m *testing.M) {
 func initTestMain() {
 	err := godotenv.Load("../../../.env_test")
 	cfg := gorm.GetMainMySQLConfig()
-	connectionString = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Database)
 	if err != nil {
 		panic(err)
 	}
+	connectionString = cfg.ConnectionString()
 	db, err = sql.Open(driver, connectionString)
 	if err != nil {
 		panic(err)
@@ -62,6 +62,7 @@ func migration() {
 	cmd := exec.Command("goose", "-dir", "../../../migrations", driver, connectionString, "up")
 	_, err = cmd.Output()
 	if err != nil {
+		fmt.Println(err.Error())
 		panic(err)
 	}
 	fmt.Println("migration successfully")

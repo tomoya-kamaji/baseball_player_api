@@ -10,29 +10,42 @@ gen-swagger: # swagger起動
 	swag init -g cmd/main.go  --output ../docs/swagger
 	docker-compose -f ../docs/swagger/docker-compose.yml up -d	
 
-.PHONY: goose-create
-goose-create: # マイグレーションファイル作成 ex) make goose-create name=new_migration_name
-	MIGRATION_FILE=$(name) sh migrations/goose.sh create
+.PHONY: migrations
+build-cli: # cliのビルド
+	go build -o cli/main cli/main.go
 
-# dev,stg,pro
-goose-up: # マイグレーション実行
-	sh migrations/goose.sh up
+migrate-dry-run: build-cli # migration dry-run
+	shema_path=$$(find . -name "schema.sql"); \
+	./cli/main migration $$shema_path
 
-goose-down: # マイグレーションロールバック
-	sh migrations/goose.sh down
+migrate-apply: build-cli # migration apply
+	shema_path=$$(find . -name "schema.sql"); \
+	./cli/main migration $$shema_path apply
 
-goose-status: # マイグレーションステータス
-	sh migrations/goose.sh status
 
-# test
-goose-up-test: # マイグレーション実行
-	sh migrations/goose_test.sh up
+# .PHONY: goose-create
+# goose-create: # マイグレーションファイル作成 ex) make goose-create name=new_migration_name
+# 	MIGRATION_FILE=$(name) sh migrations/goose.sh create
 
-goose-down-test: # マイグレーションロールバック
-	sh migrations/goose_test.sh down
+# # dev,stg,pro
+# goose-up: # マイグレーション実行
+# 	sh migrations/goose.sh up
 
-goose-status-test: # マイグレーションステータス
-	sh migrations/goose_test.sh status
+# goose-down: # マイグレーションロールバック
+# 	sh migrations/goose.sh down
+
+# goose-status: # マイグレーションステータス
+# 	sh migrations/goose.sh status
+
+# # test
+# goose-up-test: # マイグレーション実行
+# 	sh migrations/goose_test.sh up
+
+# goose-down-test: # マイグレーションロールバック
+# 	sh migrations/goose_test.sh down
+
+# goose-status-test: # マイグレーションステータス
+# 	sh migrations/goose_test.sh status
 
 build-protoc: # protoファイルからgoファイルを生成
 	protoc --go_out=grpc \

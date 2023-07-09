@@ -22,7 +22,7 @@ services:
     volumes: 
       - ..:/app
   mysql:
-    container_name: mysql-container
+    container_name: baseball-mysql-container
     image: mysql:8.0.28
     platform: linux/amd64
     ports:
@@ -31,7 +31,7 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=mydb
   mysql_test:
-    container_name: mysql-test-container
+    container_name: baseball-mysql-test-container
     image: mysql:8.0.28
     platform: linux/amd64
     ports:

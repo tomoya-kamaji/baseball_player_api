@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/tomoya_kamaji/go-pkg/db_migrate"
+	"github.com/tomoya_kamaji/go-pkg/db/schema"
 	"github.com/urfave/cli"
 )
 
@@ -29,7 +29,7 @@ func main() {
 		{
 			Name:   "migration",
 			Usage:  "DBマイグレーション",
-			Action: db_migrate.Migrate,
+			Action: schema.Migrate,
 		},
 	}
 

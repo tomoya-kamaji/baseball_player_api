@@ -1,4 +1,4 @@
-package db_migrate
+package schema
 
 import (
 	"fmt"

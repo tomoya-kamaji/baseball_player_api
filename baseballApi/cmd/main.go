@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"time"
-
 	"github.com/tomoya_kamaji/go-pkg/src/config"
 	"github.com/tomoya_kamaji/go-pkg/src/route"
+	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/sendgrid"
 	v1 "github.com/tomoya_kamaji/go-pkg/src/route/v1"
 )
 
@@ -23,28 +21,9 @@ func main() {
 	api := route.NewEngine()
 	config.InitLogger()
 
-	workerThreads := 5
-
-	for i := 0; i < workerThreads; i++ {
-
-		go func() {
-			startNotificationWoker()
-
-		}()
-
-	}
-
+	sendgrid.InitNotificationWorker()
 	v1.Init(api)
 	api.Run(port)
-}
-
-// startNotificationServer will run as a separate goroutine
-func startNotificationWoker() {
-	// Notification server logic...
-	for {
-		fmt.Println("Notification server running...")
-		time.Sleep(1 * time.Second)
-	}
 }
 
 // gRPCサーバーを起動する

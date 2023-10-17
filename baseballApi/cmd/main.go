@@ -2,9 +2,10 @@ package main
 
 import (
 	"github.com/tomoya_kamaji/go-pkg/src/config"
-	"github.com/tomoya_kamaji/go-pkg/src/route"
 	"github.com/tomoya_kamaji/go-pkg/src/infrastructure/sendgrid"
+	"github.com/tomoya_kamaji/go-pkg/src/route"
 	v1 "github.com/tomoya_kamaji/go-pkg/src/route/v1"
+	usecase "github.com/tomoya_kamaji/go-pkg/src/usecase/email"
 )
 
 const (
@@ -21,9 +22,26 @@ func main() {
 	api := route.NewEngine()
 	config.InitLogger()
 
+	//　メール送信処理のテスト
+	jobs := createJobs()
+	sendgrid.PushNotifyJob(jobs)
 	sendgrid.InitNotificationWorker()
+
 	v1.Init(api)
 	api.Run(port)
+}
+
+func createJobs() []usecase.Message {
+	var ms []usecase.Message
+	names := []string{
+		"たかはし",
+		"やまだ",
+		"たなか",
+	}
+	for _, name := range names {
+		ms = append(ms, sendgrid.NewUserRegistrationMessage(name))
+	}
+	return ms
 }
 
 // gRPCサーバーを起動する

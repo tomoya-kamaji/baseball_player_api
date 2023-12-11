@@ -1,27 +1,33 @@
-CREATE TABLE books (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255),
-    author VARCHAR(255),
-    publisher VARCHAR(255),
-    publication_year INT,
-    genre VARCHAR(255),
-    isbn VARCHAR(255)
+CREATE TABLE users (
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    contact_number VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    address VARCHAR(255),
-    contact_number VARCHAR(255)
+CREATE TABLE books (
+    id VARCHAR(255) PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    publisher VARCHAR(255) NOT NULL,
+    publication_year INT NOT NULL,
+    genre VARCHAR(255) NOT NULL,
+    isbn VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE loans (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    book_id INT,
-    user_id INT,
-    loan_date DATE,
-    due_date DATE,
-    return_date DATE,
+    id VARCHAR(255) PRIMARY KEY,
+    book_id VARCHAR(255) NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
+    loan_date DATE NOT NULL,
+    due_date DATE NOT NULL,
+    return_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_books_loans FOREIGN KEY (book_id) REFERENCES books (id),
     CONSTRAINT fk_users_loans FOREIGN KEY (user_id) REFERENCES users (id)
 );

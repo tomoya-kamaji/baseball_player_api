@@ -1,26 +1,26 @@
 version: "3"
 services:
-  api:
-    container_name: api-container
-    build:
-      context: ../
-      dockerfile: tools/api/Dockerfile
-    ports:
-      - "50051:50051"
-    depends_on:
-      - mysql
-      - redis
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
-      MYSQL_DB: mydb
-      REDIS_HOST: redis
-      MYSQL_DEBUGMODE: "true"
-      REDIS_PORT: 6379    
-    volumes: 
-      - ..:/app
+  # api:
+  #   container_name: api-container
+  #   build:
+  #     context: ../
+  #     dockerfile: tools/api/Dockerfile
+  #   ports:
+  #     - "50051:50051"
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   environment:
+  #     MYSQL_HOST: mysql
+  #     MYSQL_PORT: 3306
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: password
+  #     MYSQL_DB: mydb
+  #     REDIS_HOST: redis
+  #     MYSQL_DEBUGMODE: "true"
+  #     REDIS_PORT: 6379    
+  #   volumes: 
+  #     - ..:/app
   mysql:
     container_name: baseball-mysql-container
     image: mysql:8.0.28
